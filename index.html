@@ -1683,8 +1683,7 @@ input[type=range]{
 }
 
         /* =====================================================
-           CERTIFICATE DOWNLOAD / PRINT
-           Hanya kartu sertifikat yang ikut saat Save as PDF.
+           CERTIFICATE PRINT — EXACTLY ONE PAGE
         ===================================================== */
 
         @media print {
@@ -1696,65 +1695,113 @@ input[type=range]{
 
             html,
             body {
-                width: 100%;
-                min-height: 100%;
+                width: 100% !important;
+                height: 100% !important;
+                min-height: 100% !important;
                 margin: 0 !important;
                 padding: 0 !important;
+                overflow: hidden !important;
                 background: white !important;
+            }
+
+            /*
+               IMPORTANT:
+               visibility:hidden masih memakan ruang halaman.
+               Karena itu saat print kita benar-benar memakai
+               display:none untuk semua bagian game yang lain.
+            */
+
+            body > #home {
+                display: none !important;
+            }
+
+            body > #app {
+                display: block !important;
+                position: static !important;
+                width: 100% !important;
+                height: 100vh !important;
+                min-height: 100vh !important;
+                margin: 0 !important;
+                padding: 0 !important;
                 overflow: hidden !important;
             }
 
-            /* Sembunyikan seluruh game saat membuat PDF. */
-            body * {
-                visibility: hidden !important;
+            /* Semua section di dalam app dimatikan. */
+            #app > * {
+                display: none !important;
             }
 
-            /* Tampilkan hanya kartu sertifikat. */
-            #certificate,
-            #certificate .certificate,
-            #certificate .certificate * {
-                visibility: visible !important;
-            }
-
-            #certificate {
-                position: static !important;
+            /* Hanya certificate yang boleh hidup. */
+            #app > #certificate {
                 display: block !important;
-                width: 100% !important;
-                min-height: 100vh !important;
+                position: fixed !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
                 height: 100vh !important;
+                min-height: 100vh !important;
                 margin: 0 !important;
                 padding: 0 !important;
+                overflow: hidden !important;
                 background: white !important;
-            }
-
-            /* Hilangkan judul COMPLETION, deskripsi, input nama,
-               dan tombol PRINT dari hasil download. */
-            #certificate .section-header,
-            #certificate .container > div:not(.certificate) {
-                display: none !important;
             }
 
             #certificate .container {
                 width: 100% !important;
                 max-width: none !important;
                 height: 100vh !important;
+                min-height: 100vh !important;
                 margin: 0 !important;
                 padding: 0 !important;
+
                 display: flex !important;
                 align-items: center !important;
                 justify-content: center !important;
             }
 
+            /* Hilangkan judul halaman, input, dan tombol. */
+            #certificate .section-header {
+                display: none !important;
+            }
+
+            #certificate .container > div:not(.certificate) {
+                display: none !important;
+            }
+
+            /*
+               Kartu sertifikat menjadi satu-satunya objek
+               yang dicetak.
+            */
             #certificate .certificate {
+                display: block !important;
                 position: relative !important;
+
                 width: 90vw !important;
+                height: auto !important;
+                min-height: 0 !important;
                 max-width: 1100px !important;
-                min-height: 70vh !important;
+
                 margin: 0 !important;
                 padding: 55px !important;
-                transform: none !important;
+
+                background: linear-gradient(
+                    135deg,
+                    #fffdf7,
+                    #eef3fa
+                ) !important;
+
+                color: #111827 !important;
+
+                border: 7px solid #111827 !important;
+                border-radius: 5px !important;
+
                 box-shadow: none !important;
+
+                page-break-before: avoid !important;
+                page-break-after: avoid !important;
                 page-break-inside: avoid !important;
+                break-before: avoid-page !important;
+                break-after: avoid-page !important;
                 break-inside: avoid !important;
 
                 -webkit-print-color-adjust: exact !important;
@@ -1767,11 +1814,12 @@ input[type=range]{
 
             .noise,
             #toast,
-            .nav,
             footer {
                 display: none !important;
             }
+
         }
+
 
     </style>
 </head>
