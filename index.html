@@ -453,6 +453,7 @@ button{
   display:none;
   align-items:center;
   padding:75px 0;
+  scroll-margin-top:80px;
 }
 
 .scene.active{
@@ -4051,10 +4052,27 @@ function nextScene(){
     scene.classList.toggle("active", index === storyScene);
   });
 
-  const story = document.getElementById("story");
-  if(story){
-    story.scrollIntoView({behavior:"smooth", block:"start"});
-  }
+  /*
+    SCROLL FIX:
+    Jangan scroll ke seluruh #story karena itu membuat halaman
+    terasa "loncat" kembali ke posisi awal section.
+
+    Setelah scene aktif, scroll langsung ke scene yang baru dibuka.
+    requestAnimationFrame memberi waktu browser untuk menerapkan
+    display:flex pada scene baru sebelum posisi scroll dihitung.
+  */
+  requestAnimationFrame(() => {
+
+    const activeScene = storyScenes[storyScene];
+
+    if(activeScene){
+      activeScene.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+    }
+
+  });
 
   if(storyScene === storyScenes.length - 1){
     unlock("achievementStory");
