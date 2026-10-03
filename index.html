@@ -453,7 +453,6 @@ button{
   display:none;
   align-items:center;
   padding:75px 0;
-  scroll-margin-top:80px;
 }
 
 .scene.active{
@@ -1682,7 +1681,99 @@ input[type=range]{
   }
 
 }
-</style>
+
+        /* =====================================================
+           CERTIFICATE DOWNLOAD / PRINT
+           Hanya kartu sertifikat yang ikut saat Save as PDF.
+        ===================================================== */
+
+        @media print {
+
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+
+            html,
+            body {
+                width: 100%;
+                min-height: 100%;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: white !important;
+                overflow: hidden !important;
+            }
+
+            /* Sembunyikan seluruh game saat membuat PDF. */
+            body * {
+                visibility: hidden !important;
+            }
+
+            /* Tampilkan hanya kartu sertifikat. */
+            #certificate,
+            #certificate .certificate,
+            #certificate .certificate * {
+                visibility: visible !important;
+            }
+
+            #certificate {
+                position: static !important;
+                display: block !important;
+                width: 100% !important;
+                min-height: 100vh !important;
+                height: 100vh !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: white !important;
+            }
+
+            /* Hilangkan judul COMPLETION, deskripsi, input nama,
+               dan tombol PRINT dari hasil download. */
+            #certificate .section-header,
+            #certificate .container > div:not(.certificate) {
+                display: none !important;
+            }
+
+            #certificate .container {
+                width: 100% !important;
+                max-width: none !important;
+                height: 100vh !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+
+            #certificate .certificate {
+                position: relative !important;
+                width: 90vw !important;
+                max-width: 1100px !important;
+                min-height: 70vh !important;
+                margin: 0 !important;
+                padding: 55px !important;
+                transform: none !important;
+                box-shadow: none !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            #certificate .certificate:before {
+                display: block !important;
+            }
+
+            .noise,
+            #toast,
+            .nav,
+            footer {
+                display: none !important;
+            }
+        }
+
+    </style>
 </head>
 
 <body>
@@ -4046,13 +4137,7 @@ function nextScene(){
 
   if(storyScene >= storyScenes.length - 1) return;
 
-  /*
-    STAY-IN-PLACE FIX:
-    Simpan posisi scroll tepat sebelum scene diganti.
-    Setelah scene baru aktif, kembalikan scroll ke posisi
-    yang sama. Jadi klik LANJUT tidak membawa halaman
-    ke atas, bawah, atau scene lain.
-  */
+  // Simpan posisi layar tepat saat tombol LANJUT ditekan.
   const currentScrollY = window.scrollY;
 
   storyScene++;
@@ -4061,11 +4146,8 @@ function nextScene(){
     scene.classList.toggle("active", index === storyScene);
   });
 
-  /*
-    Browser kadang menghitung ulang layout ketika display:none
-    berubah menjadi display:flex. Karena itu posisi scroll
-    dipulihkan setelah layout selesai.
-  */
+  // Jangan scroll ke #story atau ke scene baru.
+  // Kembalikan posisi persis ke tempat user menekan LANJUT.
   requestAnimationFrame(() => {
 
     const previousBehavior =
@@ -4528,7 +4610,11 @@ function changeName(){
 }
 
 function printCertificate(){
+
+  // Browser akan membuka Print Preview.
+  // Pilih "Save as PDF" untuk mengunduh sertifikat saja.
   window.print();
+
 }
 
 
