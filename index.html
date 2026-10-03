@@ -4046,6 +4046,15 @@ function nextScene(){
 
   if(storyScene >= storyScenes.length - 1) return;
 
+  /*
+    STAY-IN-PLACE FIX:
+    Simpan posisi scroll tepat sebelum scene diganti.
+    Setelah scene baru aktif, kembalikan scroll ke posisi
+    yang sama. Jadi klik LANJUT tidak membawa halaman
+    ke atas, bawah, atau scene lain.
+  */
+  const currentScrollY = window.scrollY;
+
   storyScene++;
 
   storyScenes.forEach((scene,index) => {
@@ -4053,24 +4062,21 @@ function nextScene(){
   });
 
   /*
-    SCROLL FIX:
-    Jangan scroll ke seluruh #story karena itu membuat halaman
-    terasa "loncat" kembali ke posisi awal section.
-
-    Setelah scene aktif, scroll langsung ke scene yang baru dibuka.
-    requestAnimationFrame memberi waktu browser untuk menerapkan
-    display:flex pada scene baru sebelum posisi scroll dihitung.
+    Browser kadang menghitung ulang layout ketika display:none
+    berubah menjadi display:flex. Karena itu posisi scroll
+    dipulihkan setelah layout selesai.
   */
   requestAnimationFrame(() => {
 
-    const activeScene = storyScenes[storyScene];
+    const previousBehavior =
+      document.documentElement.style.scrollBehavior;
 
-    if(activeScene){
-      activeScene.scrollIntoView({
-        behavior:"smooth",
-        block:"start"
-      });
-    }
+    document.documentElement.style.scrollBehavior = "auto";
+
+    window.scrollTo(0, currentScrollY);
+
+    document.documentElement.style.scrollBehavior =
+      previousBehavior;
 
   });
 
