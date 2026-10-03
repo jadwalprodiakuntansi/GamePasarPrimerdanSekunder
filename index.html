@@ -1,2584 +1,4527 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>MARKET QUEST — PT SEJAHTERA</title>
-
-    <style>
-
-        @import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&display=swap');
-
-        :root {
-            --navy: #06101d;
-            --navy2: #0b1b2f;
-            --blue: #1769ff;
-            --cyan: #35d9ff;
-            --yellow: #ffd84a;
-            --orange: #ff9d43;
-            --red: #ff5964;
-            --green: #39d59b;
-            --purple: #9b7cff;
-            --white: #f7f9fc;
-            --muted: #91a4bb;
-            --dark: #111827;
-            --paper: #fffdf7;
-            --border: #1b2636;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background: var(--navy);
-            color: white;
-            font-family: Inter, Arial, sans-serif;
-            overflow-x: hidden;
-        }
-
-        button,
-        input {
-            font-family: inherit;
-        }
-
-        button {
-            cursor: pointer;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .container {
-            width: min(1180px, 92%);
-            margin: auto;
-        }
-
-        .page {
-            min-height: 100vh;
-        }
-
-        .noise {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 9999;
-            opacity: .035;
-
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-        }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #050c16;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #2b4260;
-            border-radius: 20px;
-        }
-
-        /* =====================================================
-           BUTTONS
-        ===================================================== */
-
-        .btn {
-            border: 3px solid #111827;
-            border-radius: 13px;
-            padding: 13px 20px;
-            font-weight: 900;
-            transition: .2s;
-        }
-
-        .btn:hover {
-            transform: translate(3px, 3px);
-        }
-
-        .btn-primary {
-            background: var(--yellow);
-            color: #111827;
-            box-shadow: 7px 7px 0 #111827;
-        }
-
-        .btn-blue {
-            background: var(--blue);
-            color: white;
-            box-shadow: 6px 6px 0 #111827;
-        }
-
-        .btn-dark {
-            background: #101d31;
-            color: white;
-            border-color: #405674;
-        }
-
-        .btn-green {
-            background: var(--green);
-            color: #08271d;
-            box-shadow: 6px 6px 0 #111827;
-        }
-
-        .btn-red {
-            background: var(--red);
-            color: white;
-        }
-
-        /* =====================================================
-           HOME
-        ===================================================== */
-
-        #home {
-            min-height: 100vh;
-            display: grid;
-            place-items: center;
-            position: relative;
-            overflow: hidden;
-
-            background:
-                radial-gradient(
-                    circle at 15% 20%,
-                    rgba(53, 217, 255, .15),
-                    transparent 27%
-                ),
-                radial-gradient(
-                    circle at 85% 75%,
-                    rgba(255, 216, 74, .12),
-                    transparent 30%
-                ),
-                linear-gradient(
-                    135deg,
-                    #040b15,
-                    #0b1d34 55%,
-                    #040b15
-                );
-        }
-
-        .grid {
-            position: absolute;
-            inset: 0;
-            opacity: .12;
-
-            background-image:
-                linear-gradient(
-                    rgba(255, 255, 255, .5) 1px,
-                    transparent 1px
-                ),
-                linear-gradient(
-                    90deg,
-                    rgba(255, 255, 255, .5) 1px,
-                    transparent 1px
-                );
-
-            background-size: 45px 45px;
-
-            transform:
-                perspective(700px)
-                rotateX(60deg)
-                scale(1.5)
-                translateY(25%);
-        }
-
-        .home-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            max-width: 950px;
-        }
-
-        .home-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-
-            padding: 8px 14px;
-
-            border: 1px solid #405875;
-            border-radius: 999px;
-
-            background: #10233d;
-            color: #d6e8fb;
-
-            font-size: 12px;
-            font-weight: 900;
-            letter-spacing: .12em;
-        }
-
-        .logo {
-            width: 110px;
-            height: 110px;
-            margin: 28px auto;
-
-            display: grid;
-            place-items: center;
-
-            background: var(--yellow);
-            color: #111827;
-
-            border: 5px solid #111827;
-            border-radius: 26px;
-
-            font-weight: 1000;
-            font-size: 25px;
-
-            transform: rotate(-5deg);
-            box-shadow: 11px 11px 0 #111827;
-        }
-
-        .home-content h1 {
-            font-family: Anton, sans-serif;
-            font-size: clamp(60px, 10vw, 115px);
-            line-height: .82;
-            letter-spacing: .01em;
-        }
-
-        .home-content h1 span {
-            color: var(--yellow);
-        }
-
-        .home-sub {
-            max-width: 760px;
-            margin: 25px auto 0;
-
-            color: #b5c4d6;
-            font-size: 18px;
-            line-height: 1.7;
-        }
-
-        .home-actions {
-            margin-top: 32px;
-        }
-
-        .home-small {
-            margin-top: 18px;
-            color: #71849c;
-            font-size: 12px;
-        }
-
-        .floating {
-            position: absolute;
-            color: rgba(255, 255, 255, .08);
-            font-size: 100px;
-            font-weight: 1000;
-        }
-
-        .float1 {
-            left: 6%;
-            top: 17%;
-            transform: rotate(-10deg);
-        }
-
-        .float2 {
-            right: 7%;
-            bottom: 15%;
-            transform: rotate(9deg);
-        }
-
-        /* =====================================================
-           NAVIGATION
-        ===================================================== */
-
-        .nav {
-            position: sticky;
-            top: 0;
-            z-index: 500;
-
-            background: rgba(5, 13, 24, .92);
-            backdrop-filter: blur(15px);
-
-            border-bottom: 1px solid #263a53;
-        }
-
-        .nav-inner {
-            min-height: 65px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-        }
-
-        .nav-brand {
-            font-size: 13px;
-            font-weight: 1000;
-            letter-spacing: .08em;
-        }
-
-        .nav-brand span {
-            color: var(--yellow);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 5px;
-            overflow-x: auto;
-        }
-
-        .nav-links button {
-            white-space: nowrap;
-
-            padding: 8px 10px;
-
-            background: transparent;
-            border: 0;
-
-            color: #8195ad;
-
-            font-size: 11px;
-            font-weight: 900;
-        }
-
-        .nav-links button:hover,
-        .nav-links button.active {
-            color: white;
-        }
-
-        @media (max-width: 850px) {
-
-            .nav-links {
-                display: none;
-            }
-
-        }
-
-        /* =====================================================
-           SECTION COMMON
-        ===================================================== */
-
-        .section {
-            min-height: 100vh;
-            padding: 85px 0;
-        }
-
-        .section-header {
-            max-width: 850px;
-            margin: 0 auto 45px;
-            text-align: center;
-        }
-
-        .eyebrow {
-            color: var(--cyan);
-            font-size: 12px;
-            font-weight: 1000;
-            letter-spacing: .15em;
-        }
-
-        .section-header h2 {
-            font-family: Anton, sans-serif;
-            font-size: clamp(45px, 7vw, 80px);
-            line-height: .9;
-            margin: 14px 0;
-        }
-
-        .section-header p {
-            color: #9dafc4;
-            line-height: 1.7;
-            font-size: 17px;
-        }
-
-        /* =====================================================
-           MARKET MAP
-        ===================================================== */
-
-        #map {
-            background: #071321;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .map-wrapper {
-            max-width: 1000px;
-            margin: auto;
-            position: relative;
-            padding: 30px 0;
-        }
-
-        .map-line {
-            position: absolute;
-
-            left: 50%;
-            top: 70px;
-            bottom: 70px;
-
-            width: 6px;
-
-            transform: translateX(-50%);
-
-            background: linear-gradient(
-                var(--yellow),
-                var(--blue),
-                var(--green),
-                var(--purple)
-            );
-
-            border-radius: 20px;
-        }
-
-        .map-node {
-            position: relative;
-            z-index: 2;
-
-            width: 240px;
-            min-height: 130px;
-
-            padding: 18px;
-
-            border: 4px solid #111827;
-            border-radius: 20px;
-
-            background: white;
-            color: #111827;
-
-            box-shadow: 9px 9px 0 #111827;
-
-            margin: 0 auto 45px;
-
-            text-align: center;
-
-            transition: .25s;
-        }
-
-        .map-node:hover {
-            transform: scale(1.04) rotate(-1deg);
-        }
-
-        .map-node.done {
-            background: var(--green);
-        }
-
-        .map-node.current {
-            background: var(--yellow);
-            animation: mapPulse 1.5s infinite;
-        }
-
-        .map-icon {
-            font-size: 35px;
-            margin-bottom: 7px;
-        }
-
-        .map-title {
-            font-weight: 1000;
-        }
-
-        .map-desc {
-            font-size: 11px;
-            margin-top: 5px;
-            color: #3b4c60;
-        }
-
-        @keyframes mapPulse {
-
-            50% {
-                box-shadow: 13px 13px 0 #111827;
-            }
-
-        }
-
-        /* =====================================================
-           STORY
-        ===================================================== */
-
-        #story {
-            background: #040b14;
-        }
-
-        .scene {
-            min-height: calc(100vh - 65px);
-
-            display: none;
-            align-items: center;
-
-            padding: 75px 0;
-        }
-
-        .scene.active {
-            display: flex;
-            animation: sceneIn .55s ease;
-        }
-
-        @keyframes sceneIn {
-
-            from {
-                opacity: 0;
-                transform: translateX(35px);
-            }
-
-            to {
-                opacity: 1;
-                transform: none;
-            }
-
-        }
-
-        .scene-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 55px;
-            align-items: center;
-        }
-
-        @media (max-width: 850px) {
-
-            .scene-grid {
-                grid-template-columns: 1fr;
-            }
-
-        }
-
-        .scene-copy .eyebrow {
-            color: var(--cyan);
-        }
-
-        .scene-copy h2 {
-            font-family: Anton, sans-serif;
-            font-size: clamp(45px, 6vw, 75px);
-            line-height: .93;
-            margin: 14px 0 20px;
-        }
-
-        .scene-copy p {
-            color: #b6c5d7;
-            font-size: 17px;
-            line-height: 1.75;
-        }
-
-        .dialogue {
-            margin: 25px 0;
-            padding: 18px 20px;
-
-            background: var(--paper);
-            color: #111827;
-
-            border: 4px solid #111827;
-            border-radius: 17px;
-
-            font-weight: 800;
-
-            box-shadow: 8px 8px 0 rgba(0, 0, 0, .4);
-        }
-
-        .fact {
-            display: flex;
-            gap: 12px;
-            padding: 16px;
-
-            background: #0c1c30;
-
-            border-left: 5px solid var(--yellow);
-            border-radius: 10px;
-
-            line-height: 1.55;
-        }
-
-        .fact strong {
-            color: var(--yellow);
-        }
-
-        .scene-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-top: 28px;
-        }
-
-        .scene-count {
-            color: #6f839b;
-            font-size: 12px;
-            font-weight: 900;
-        }
-
-        /* =====================================================
-           COMIC
-        ===================================================== */
-
-        .comic {
-            position: relative;
-            min-height: 520px;
-            overflow: hidden;
-
-            border: 5px solid #111827;
-            border-radius: 28px;
-
-            box-shadow: 15px 15px 0 #111827;
-        }
-
-        /* COMPANY */
-
-        .comic-company {
-            background: linear-gradient(
-                #8bdfff 0 57%,
-                #e7edf3 57%
-            );
-        }
-
-        .sun {
-            position: absolute;
-
-            width: 95px;
-            height: 95px;
-
-            right: 55px;
-            top: 45px;
-
-            border-radius: 50%;
-
-            background: var(--yellow);
-
-            border: 4px solid #111827;
-        }
-
-        .company {
-            position: absolute;
-
-            width: 63%;
-            height: 55%;
-
-            left: 18.5%;
-            top: 28%;
-
-            background: #fafafa;
-
-            border: 5px solid #111827;
-            border-radius: 12px;
-
-            box-shadow: 11px 11px 0 rgba(0, 0, 0, .3);
-        }
-
-        .roof {
-            height: 18%;
-
-            background: var(--blue);
-
-            border-bottom: 5px solid #111827;
-        }
-
-        .sign {
-            position: absolute;
-
-            top: 27px;
-            left: 50%;
-
-            transform: translateX(-50%);
-
-            padding: 8px 14px;
-
-            background: var(--yellow);
-            color: #111827;
-
-            border: 3px solid #111827;
-
-            font-weight: 1000;
-            white-space: nowrap;
-        }
-
-        .door {
-            position: absolute;
-
-            width: 18%;
-            height: 38%;
-
-            bottom: 0;
-            left: 41%;
-
-            background: #10243e;
-
-            border: 4px solid #111827;
-        }
-
-        .city {
-            position: absolute;
-
-            left: 0;
-            right: 0;
-            bottom: 0;
-
-            height: 40%;
-
-            display: flex;
-            align-items: end;
-
-            gap: 7px;
-
-            padding: 0 15px;
-        }
-
-        .build {
-            background: #18334f;
-            border: 4px solid #111827;
-            position: relative;
-        }
-
-        .build:before {
-            content: "";
-
-            position: absolute;
-            inset: 14px;
-
-            background: repeating-linear-gradient(
-                90deg,
-                var(--yellow) 0 8px,
-                transparent 8px 21px
-            );
-
-            opacity: .7;
-        }
-
-        .bb1 {
-            height: 58%;
-            width: 18%;
-        }
-
-        .bb2 {
-            height: 90%;
-            width: 22%;
-        }
-
-        .bb3 {
-            height: 70%;
-            width: 20%;
-        }
-
-        .bb4 {
-            height: 45%;
-            width: 18%;
-        }
-
-        /* =====================================================
-           GENERIC CARDS
-        ===================================================== */
-
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        @media (max-width: 900px) {
-
-            .card-grid {
-                grid-template-columns: 1fr;
-            }
-
-        }
-
-        .card {
-            background: #0d1c2e;
-
-            border: 2px solid #29405b;
-            border-radius: 18px;
-
-            padding: 25px;
-
-            transition: .2s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--blue);
-        }
-
-        .card-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-        }
-
-        .card h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        .card p {
-            color: #9dafc4;
-            line-height: 1.65;
-            font-size: 14px;
-        }
-
-        /* =====================================================
-           ACADEMY
-        ===================================================== */
-
-        #academy {
-            background:
-                linear-gradient(
-                    rgba(7, 18, 32, .96),
-                    rgba(7, 18, 32, .96)
-                );
-        }
-
-        .lesson-box {
-            margin-top: 35px;
-
-            background: #f8fafc;
-            color: #111827;
-
-            border: 5px solid #111827;
-            border-radius: 22px;
-
-            padding: 35px;
-
-            box-shadow: 12px 12px 0 #111827;
-        }
-
-        .lesson-box h3 {
-            font-family: Anton, sans-serif;
-            font-size: 38px;
-            margin-bottom: 15px;
-        }
-
-        .lesson-box p {
-            color: #405064;
-            line-height: 1.8;
-            margin-bottom: 15px;
-        }
-
-        .lesson-highlight {
-            margin-top: 20px;
-
-            padding: 20px;
-
-            background: #eaf2ff;
-
-            border-left: 7px solid var(--blue);
-            border-radius: 10px;
-
-            line-height: 1.7;
-        }
-
-        .formula {
-            margin: 25px 0;
-
-            padding: 22px;
-
-            background: #111827;
-            color: var(--yellow);
-
-            border-radius: 15px;
-
-            font-family: monospace;
-            font-size: 18px;
-            font-weight: 900;
-
-            overflow-x: auto;
-        }
-
-        /* =====================================================
-           MONEY GAME
-        ===================================================== */
-
-        #moneyGame {
-            background: #071321;
-        }
-
-        .money-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            align-items: stretch;
-        }
-
-        @media (max-width: 850px) {
-
-            .money-layout {
-                grid-template-columns: 1fr;
-            }
-
-        }
-
-        .money-board {
-            position: relative;
-
-            min-height: 500px;
-
-            padding: 30px;
-
-            background: #0c1c30;
-
-            border: 3px solid #29405b;
-            border-radius: 25px;
-
-            overflow: hidden;
-        }
-
-        .money-title {
-            font-size: 13px;
-            color: #8fa3bb;
-            font-weight: 900;
-            letter-spacing: .1em;
-        }
-
-        .money-flow {
-            min-height: 360px;
-
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-
-            gap: 20px;
-        }
-
-        .money-node {
-            width: min(300px, 90%);
-
-            padding: 20px;
-
-            background: white;
-            color: #111827;
-
-            border: 4px solid #111827;
-            border-radius: 18px;
-
-            text-align: center;
-
-            box-shadow: 7px 7px 0 #111827;
-        }
-
-        .money-node .big {
-            font-size: 40px;
-            margin-bottom: 8px;
-        }
-
-        .money-arrow {
-            color: var(--yellow);
-            font-size: 35px;
-            font-weight: 1000;
-        }
-
-        .money-question {
-            padding: 30px;
-
-            background: #111c2c;
-
-            border: 3px solid #314862;
-            border-radius: 20px;
-        }
-
-        .money-question h3 {
-            font-size: 24px;
-            margin-bottom: 12px;
-        }
-
-        .money-question p {
-            color: #aabbd0;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .answer-buttons {
-            display: grid;
-            gap: 12px;
-        }
-
-        .answer-btn {
-            padding: 16px;
-
-            text-align: left;
-
-            background: #0c1a2c;
-            color: white;
-
-            border: 2px solid #3b526d;
-            border-radius: 13px;
-
-            font-weight: 800;
-
-            transition: .2s;
-        }
-
-        .answer-btn:hover {
-            background: #142b47;
-            border-color: var(--cyan);
-        }
-
-        .feedback {
-            margin-top: 20px;
-
-            padding: 18px;
-
-            border-radius: 15px;
-
-            line-height: 1.65;
-        }
-
-        .feedback.correct {
-            background: #0d3a2c;
-            color: #9ff0d0;
-            border: 2px solid #237d60;
-        }
-
-        .feedback.wrong {
-            background: #3a1720;
-            color: #ffb7be;
-            border: 2px solid #873b48;
-        }
-
-        /* =====================================================
-           MARKET DETECTIVE
-        ===================================================== */
-
-        #challenge {
-            background:
-                radial-gradient(
-                    circle at 50% 0%,
-                    rgba(155, 124, 255, .12),
-                    transparent 35%
-                ),
-                #070f1c;
-        }
-
-        .challenge-card {
-            max-width: 900px;
-            margin: auto;
-
-            background: #f8fafc;
-            color: #111827;
-
-            border: 5px solid #111827;
-            border-radius: 25px;
-
-            padding: 35px;
-
-            box-shadow: 13px 13px 0 #111827;
-        }
-
-        .case-number {
-            color: #6b7c90;
-
-            font-size: 12px;
-            font-weight: 1000;
-
-            letter-spacing: .12em;
-
-            margin-bottom: 15px;
-        }
-
-        .case-question {
-            font-size: 25px;
-            font-weight: 900;
-            line-height: 1.45;
-
-            margin-bottom: 25px;
-        }
-
-        .market-choice {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 18px;
-        }
-
-        @media (max-width: 700px) {
-
-            .market-choice {
-                grid-template-columns: 1fr;
-            }
-
-        }
-
-        .market-choice button {
-            min-height: 190px;
-
-            padding: 25px;
-
-            border: 4px solid #111827;
-            border-radius: 18px;
-
-            font-size: 17px;
-            font-weight: 1000;
-
-            transition: .2s;
-        }
-
-        .market-choice button:hover {
-            transform: translateY(-4px);
-        }
-
-        .market-choice button.selected {
-            outline: 5px solid var(--blue);
-            transform: translateY(-4px);
-        }
-
-        .primary-choice {
-            background: #dceaff;
-            color: #1247a8;
-        }
-
-        .secondary-choice {
-            background: #e2f9ef;
-            color: #116b4e;
-        }
-
-        .market-choice button:disabled {
-            cursor: default;
-            opacity: .85;
-        }
-
-        /* =====================================================
-           LIQUIDITY
-        ===================================================== */
-
-        #liquidity {
-            background: #040c15;
-        }
-
-        .liquidity-panel {
-            max-width: 950px;
-            margin: auto;
-
-            padding: 35px;
-
-            background: #0d1c2e;
-
-            border: 3px solid #2b425e;
-            border-radius: 25px;
-        }
-
-        .range-wrap {
-            margin: 35px 0;
-        }
-
-        .range-wrap input[type="range"] {
-            width: 100%;
-            accent-color: var(--green);
-        }
-
-        .meter {
-            height: 35px;
-
-            margin-top: 20px;
-
-            background: #07111e;
-
-            border: 2px solid #324a66;
-            border-radius: 999px;
-
-            overflow: hidden;
-        }
-
-        .meter-fill {
-            width: 50%;
-            height: 100%;
-
-            background: linear-gradient(
-                90deg,
-                var(--red),
-                var(--yellow),
-                var(--green)
-            );
-
-            transition: .3s;
-        }
-
-        .liquidity-result {
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .liquidity-result h3 {
-            font-family: Anton, sans-serif;
-            font-size: 55px;
-        }
-
-        .liquidity-result p {
-            color: #9dafc4;
-            line-height: 1.7;
-        }
-
-        /* =====================================================
-           SIMULATOR
-        ===================================================== */
-
-        #simulator {
-            background: #071321;
-        }
-
-        .simulator {
-            max-width: 900px;
-            margin: auto;
-
-            padding: 35px;
-
-            background: #0e2035;
-
-            border: 4px solid #294761;
-            border-radius: 24px;
-        }
-
-        .stock-screen {
-            padding: 25px;
-
-            background: #050d17;
-
-            border: 3px solid #263e58;
-            border-radius: 18px;
-
-            margin-bottom: 25px;
-        }
-
-        .stock-price {
-            font-family: Anton, sans-serif;
-            font-size: 60px;
-            color: var(--green);
-        }
-
-        .stock-meta {
-            display: flex;
-            gap: 25px;
-            flex-wrap: wrap;
-
-            margin-top: 10px;
-
-            color: #8195ac;
-            font-size: 13px;
-        }
-
-        .trade-buttons {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
-
-        @media (max-width: 650px) {
-
-            .trade-buttons {
-                grid-template-columns: 1fr;
-            }
-
-        }
-
-        .trade-buttons button {
-            padding: 20px;
-
-            border: 3px solid #111827;
-            border-radius: 14px;
-
-            font-weight: 1000;
-            font-size: 16px;
-        }
-
-        .buy {
-            background: var(--green);
-            color: #08271d;
-        }
-
-        .sell {
-            background: var(--red);
-            color: white;
-        }
-
-        .hold {
-            background: var(--yellow);
-            color: #111827;
-        }
-
-        #tradeResult {
-            margin-top: 20px;
-
-            padding: 20px;
-
-            background: #f8fafc;
-            color: #111827;
-
-            border-radius: 15px;
-
-            line-height: 1.65;
-        }
-
-        /* =====================================================
-           FINAL BOSS
-        ===================================================== */
-
-        #boss {
-            background:
-                radial-gradient(
-                    circle at 50% 10%,
-                    rgba(255, 89, 100, .15),
-                    transparent 35%
-                ),
-                #0b0a12;
-        }
-
-        .boss-panel {
-            max-width: 900px;
-            margin: auto;
-        }
-
-        .boss-q {
-            margin-bottom: 22px;
-
-            padding: 25px;
-
-            background: #141321;
-
-            border: 2px solid #3c354d;
-            border-radius: 18px;
-        }
-
-        .boss-q h3 {
-            font-size: 18px;
-            line-height: 1.5;
-            margin-bottom: 15px;
-        }
-
-        .boss-options {
-            display: grid;
-            gap: 10px;
-        }
-
-        .boss-options button {
-            padding: 15px;
-
-            text-align: left;
-
-            background: #0c0d16;
-            color: white;
-
-            border: 2px solid #3b3650;
-            border-radius: 12px;
-
-            font-weight: 800;
-
-            transition: .2s;
-        }
-
-        .boss-options button:hover {
-            border-color: var(--purple);
-        }
-
-        .boss-options button.selected {
-            background: #2c2250;
-            border-color: var(--purple);
-
-            box-shadow: 0 0 0 2px var(--purple);
-        }
-
-        .boss-result {
-            margin-top: 25px;
-
-            padding: 25px;
-
-            background: #102f27;
-            color: #b7f7df;
-
-            border: 3px solid #2b7d65;
-            border-radius: 18px;
-
-            line-height: 1.7;
-        }
-
-        /* =====================================================
-           REPORT
-        ===================================================== */
-
-        #report {
-            background: #071321;
-        }
-
-        .report-card {
-            max-width: 1000px;
-            margin: auto;
-
-            padding: 35px;
-
-            background: #f8fafc;
-            color: #111827;
-
-            border: 5px solid #111827;
-            border-radius: 25px;
-
-            box-shadow: 12px 12px 0 #111827;
-        }
-
-        .overall {
-            text-align: center;
-
-            padding-bottom: 30px;
-
-            border-bottom: 2px solid #d9e0e8;
-        }
-
-        .overall-score {
-            font-family: Anton, sans-serif;
-            font-size: 100px;
-            line-height: 1;
-
-            color: var(--blue);
-        }
-
-        .skill-list {
-            display: grid;
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .skill-row {
-            display: grid;
-            grid-template-columns: 180px 1fr 70px;
-            align-items: center;
-            gap: 15px;
-        }
-
-        @media (max-width: 650px) {
-
-            .skill-row {
-                grid-template-columns: 1fr;
-                gap: 8px;
-            }
-
-        }
-
-        .skill-name {
-            font-weight: 900;
-        }
-
-        .skill-bar {
-            height: 15px;
-
-            background: #dce3eb;
-
-            border-radius: 999px;
-
-            overflow: hidden;
-        }
-
-        .skill-fill {
-            width: 0%;
-            height: 100%;
-
-            background: var(--blue);
-
-            transition: .5s;
-        }
-
-        .skill-value {
-            font-weight: 1000;
-            text-align: right;
-        }
-
-        /* =====================================================
-           ACHIEVEMENTS
-        ===================================================== */
-
-        #achievements {
-            background: #040b14;
-        }
-
-        .achievement-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-        }
-
-        @media (max-width: 900px) {
-
-            .achievement-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-        }
-
-        @media (max-width: 550px) {
-
-            .achievement-grid {
-                grid-template-columns: 1fr;
-            }
-
-        }
-
-        .achievement {
-            min-height: 180px;
-
-            padding: 20px;
-
-            border: 2px solid #30445c;
-            border-radius: 17px;
-
-            text-align: center;
-
-            background: #0d1b2d;
-        }
-
-        .achievement-icon {
-            font-size: 50px;
-            margin-bottom: 12px;
-        }
-
-        .achievement h3 {
-            font-size: 15px;
-            margin-bottom: 7px;
-        }
-
-        .achievement p {
-            color: #8498af;
-            font-size: 12px;
-            line-height: 1.5;
-        }
-
-        .achievement.locked {
-            opacity: .35;
-            filter: grayscale(1);
-        }
-
-        .achievement.unlocked {
-            border-color: var(--yellow);
-            box-shadow: 0 0 25px rgba(255, 216, 74, .1);
-        }
-
-        /* =====================================================
-           CERTIFICATE
-        ===================================================== */
-
-        #certificate {
-            background: #071321;
-        }
-
-        .certificate-wrap {
-            max-width: 850px;
-            margin: auto;
-        }
-
-        .certificate {
-            position: relative;
-
-            padding: 55px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #fffdf7,
-                    #eef3fa
-                );
-
-            color: #111827;
-
-            border: 7px solid #111827;
-            border-radius: 5px;
-
-            box-shadow: 15px 15px 0 #111827;
-
-            text-align: center;
-        }
-
-        .certificate:before {
-            content: "";
-
-            position: absolute;
-
-            inset: 18px;
-
-            border: 2px solid #d1b84a;
-
-            pointer-events: none;
-        }
-
-        .certificate-small {
-            font-size: 11px;
-            font-weight: 1000;
-            letter-spacing: .18em;
-            color: #6d7480;
-        }
-
-        .certificate h2 {
-            position: relative;
-
-            margin: 25px 0 10px;
-
-            font-family: Anton, sans-serif;
-            font-size: 65px;
-
-            color: #17335d;
-        }
-
-        .certificate-name {
-            position: relative;
-
-            font-family: Anton, sans-serif;
-            font-size: 42px;
-
-            color: #111827;
-
-            margin: 25px 0;
-        }
-
-        .certificate-desc {
-            position: relative;
-
-            max-width: 580px;
-            margin: auto;
-
-            color: #536071;
-            line-height: 1.7;
-        }
-
-        .name-form {
-            display: flex;
-            max-width: 600px;
-            margin: 30px auto;
-
-            gap: 10px;
-        }
-
-        .name-form input {
-            flex: 1;
-
-            padding: 14px 16px;
-
-            border: 3px solid #111827;
-            border-radius: 12px;
-
-            outline: none;
-        }
-
-        .footer {
-            padding: 30px 0;
-
-            color: #60748c;
-
-            text-align: center;
-            font-size: 12px;
-        }
-
-        /* =====================================================
-           TOAST
-        ===================================================== */
-
-        #toast {
-            position: fixed;
-
-            right: 20px;
-            bottom: 20px;
-
-            z-index: 10000;
-
-            max-width: 330px;
-
-            padding: 15px 18px;
-
-            background: #f8fafc;
-            color: #111827;
-
-            border: 3px solid #111827;
-            border-radius: 13px;
-
-            box-shadow: 7px 7px 0 #111827;
-
-            font-weight: 900;
-
-            transform: translateY(130px);
-            opacity: 0;
-
-            transition: .3s;
-        }
-
-        #toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        /* =====================================================
-           PRINT
-        ===================================================== */
-
-        @media print {
-
-            body {
-                background: white;
-            }
-
-            body * {
-                visibility: hidden;
-            }
-
-            #certificate,
-            #certificate * {
-                visibility: visible;
-            }
-
-            #certificate {
-                position: absolute;
-                inset: 0;
-
-                min-height: 100vh;
-
-                padding: 30px;
-
-                background: white;
-            }
-
-            .certificate {
-                box-shadow: none;
-            }
-
-            .name-form,
-            .btn,
-            .footer,
-            .nav {
-                display: none !important;
-            }
-
-        }
-
-    </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MARKET QUEST — PT SEJAHTERA</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root{
+  --navy:#06101d;
+  --navy2:#0b1b2f;
+  --blue:#1769ff;
+  --cyan:#35d9ff;
+  --yellow:#ffd84a;
+  --orange:#ff9d43;
+  --red:#ff5964;
+  --green:#39d59b;
+  --purple:#9b7cff;
+  --white:#f7f9fc;
+  --muted:#91a4bb;
+  --dark:#111827;
+  --paper:#fffdf7;
+  --border:#1b2636;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:var(--navy);
+  color:white;
+  font-family:Inter,Arial,sans-serif;
+  overflow-x:hidden;
+}
+
+button,input{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.container{
+  width:min(1180px,92%);
+  margin:auto;
+}
+
+.page{
+  min-height:100vh;
+}
+
+.noise{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:9999;
+  opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::-webkit-scrollbar{
+  width:8px;
+}
+
+::-webkit-scrollbar-track{
+  background:#050c16;
+}
+
+::-webkit-scrollbar-thumb{
+  background:#2b4260;
+  border-radius:20px;
+}
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.btn{
+  border:3px solid #111827;
+  border-radius:13px;
+  padding:13px 20px;
+  font-weight:900;
+  transition:.2s;
+}
+
+.btn:hover{
+  transform:translate(3px,3px);
+}
+
+.btn-primary{
+  background:var(--yellow);
+  color:#111827;
+  box-shadow:7px 7px 0 #111827;
+}
+
+.btn-blue{
+  background:var(--blue);
+  color:white;
+  box-shadow:6px 6px 0 #111827;
+}
+
+.btn-dark{
+  background:#101d31;
+  color:white;
+  border-color:#405674;
+}
+
+.btn-green{
+  background:var(--green);
+  color:#08271d;
+  box-shadow:6px 6px 0 #111827;
+}
+
+.btn-red{
+  background:var(--red);
+  color:white;
+}
+
+/* =====================================================
+   HOME
+===================================================== */
+
+#home{
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  position:relative;
+  overflow:hidden;
+
+  background:
+    radial-gradient(circle at 15% 20%,rgba(53,217,255,.15),transparent 27%),
+    radial-gradient(circle at 85% 75%,rgba(255,216,74,.12),transparent 30%),
+    linear-gradient(135deg,#040b15,#0b1d34 55%,#040b15);
+}
+
+.grid{
+  position:absolute;
+  inset:0;
+  opacity:.12;
+
+  background-image:
+    linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);
+
+  background-size:45px 45px;
+
+  transform:
+    perspective(700px)
+    rotateX(60deg)
+    scale(1.5)
+    translateY(25%);
+}
+
+.home-content{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  max-width:950px;
+}
+
+.home-label{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 14px;
+  border:1px solid #405875;
+  border-radius:999px;
+  background:#10233d;
+  color:#d6e8fb;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.12em;
+}
+
+.logo{
+  width:110px;
+  height:110px;
+  margin:28px auto;
+
+  display:grid;
+  place-items:center;
+
+  background:var(--yellow);
+  color:#111827;
+
+  border:5px solid #111827;
+  border-radius:26px;
+
+  font-weight:1000;
+  font-size:25px;
+
+  transform:rotate(-5deg);
+  box-shadow:11px 11px 0 #111827;
+}
+
+.home-content h1{
+  font-family:Anton,sans-serif;
+  font-size:clamp(60px,10vw,115px);
+  line-height:.82;
+  letter-spacing:.01em;
+}
+
+.home-content h1 span{
+  color:var(--yellow);
+}
+
+.home-sub{
+  max-width:760px;
+  margin:25px auto 0;
+  color:#b5c4d6;
+  font-size:18px;
+  line-height:1.7;
+}
+
+.home-actions{
+  margin-top:32px;
+}
+
+.home-small{
+  margin-top:18px;
+  color:#71849c;
+  font-size:12px;
+}
+
+.floating{
+  position:absolute;
+  color:rgba(255,255,255,.08);
+  font-size:100px;
+  font-weight:1000;
+}
+
+.float1{
+  left:6%;
+  top:17%;
+  transform:rotate(-10deg);
+}
+
+.float2{
+  right:7%;
+  bottom:15%;
+  transform:rotate(9deg);
+}
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+.nav{
+  position:sticky;
+  top:0;
+  z-index:500;
+
+  background:rgba(5,13,24,.92);
+  backdrop-filter:blur(15px);
+
+  border-bottom:1px solid #263a53;
+}
+
+.nav-inner{
+  min-height:65px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.nav-brand{
+  font-size:13px;
+  font-weight:1000;
+  letter-spacing:.08em;
+}
+
+.nav-brand span{
+  color:var(--yellow);
+}
+
+.nav-links{
+  display:flex;
+  gap:5px;
+  overflow-x:auto;
+}
+
+.nav-links button{
+  white-space:nowrap;
+  padding:8px 10px;
+  background:transparent;
+  border:0;
+  color:#8195ad;
+  font-size:11px;
+  font-weight:900;
+}
+
+.nav-links button:hover,
+.nav-links button.active{
+  color:white;
+}
+
+@media(max-width:850px){
+  .nav-links{
+    display:none;
+  }
+}
+
+/* =====================================================
+   SECTION COMMON
+===================================================== */
+
+.section{
+  min-height:100vh;
+  padding:85px 0;
+}
+
+.section-header{
+  max-width:850px;
+  margin:0 auto 45px;
+  text-align:center;
+}
+
+.eyebrow{
+  color:var(--cyan);
+  font-size:12px;
+  font-weight:1000;
+  letter-spacing:.15em;
+}
+
+.section-header h2{
+  font-family:Anton,sans-serif;
+  font-size:clamp(45px,7vw,80px);
+  line-height:.9;
+  margin:14px 0;
+}
+
+.section-header p{
+  color:#9dafc4;
+  line-height:1.7;
+  font-size:17px;
+}
+
+/* =====================================================
+   MARKET MAP
+===================================================== */
+
+#map{
+  background:#071321;
+  position:relative;
+  overflow:hidden;
+}
+
+.map-wrapper{
+  max-width:1000px;
+  margin:auto;
+  position:relative;
+  padding:30px 0;
+}
+
+.map-line{
+  position:absolute;
+  left:50%;
+  top:70px;
+  bottom:70px;
+  width:6px;
+  transform:translateX(-50%);
+  background:linear-gradient(
+    var(--yellow),
+    var(--blue),
+    var(--green),
+    var(--purple)
+  );
+  border-radius:20px;
+}
+
+.map-node{
+  position:relative;
+  z-index:2;
+  width:240px;
+  min-height:130px;
+
+  padding:18px;
+
+  border:4px solid #111827;
+  border-radius:20px;
+
+  background:white;
+  color:#111827;
+
+  box-shadow:9px 9px 0 #111827;
+
+  margin:0 auto 45px;
+
+  text-align:center;
+
+  transition:.25s;
+}
+
+.map-node:hover{
+  transform:scale(1.04) rotate(-1deg);
+}
+
+.map-node.done{
+  background:var(--green);
+}
+
+.map-node.current{
+  background:var(--yellow);
+  animation:mapPulse 1.5s infinite;
+}
+
+.map-icon{
+  font-size:35px;
+  margin-bottom:7px;
+}
+
+.map-title{
+  font-weight:1000;
+}
+
+.map-desc{
+  font-size:11px;
+  margin-top:5px;
+  color:#3b4c60;
+}
+
+@keyframes mapPulse{
+  50%{
+    box-shadow:13px 13px 0 #111827;
+  }
+}
+
+/* =====================================================
+   STORY
+===================================================== */
+
+#story{
+  background:#040b14;
+}
+
+.scene{
+  min-height:calc(100vh - 65px);
+  display:none;
+  align-items:center;
+  padding:75px 0;
+}
+
+.scene.active{
+  display:flex;
+  animation:sceneIn .55s ease;
+}
+
+@keyframes sceneIn{
+  from{
+    opacity:0;
+    transform:translateX(35px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+.scene-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:55px;
+  align-items:center;
+}
+
+@media(max-width:850px){
+  .scene-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+.scene-copy .eyebrow{
+  color:var(--cyan);
+}
+
+.scene-copy h2{
+  font-family:Anton,sans-serif;
+  font-size:clamp(45px,6vw,75px);
+  line-height:.93;
+  margin:14px 0 20px;
+}
+
+.scene-copy p{
+  color:#b6c5d7;
+  font-size:17px;
+  line-height:1.75;
+}
+
+.dialogue{
+  margin:25px 0;
+  padding:18px 20px;
+
+  background:var(--paper);
+  color:#111827;
+
+  border:4px solid #111827;
+  border-radius:17px;
+
+  font-weight:800;
+
+  box-shadow:8px 8px 0 rgba(0,0,0,.4);
+}
+
+.fact{
+  display:flex;
+  gap:12px;
+  padding:16px;
+
+  background:#0c1c30;
+
+  border-left:5px solid var(--yellow);
+  border-radius:10px;
+
+  line-height:1.55;
+}
+
+.fact strong{
+  color:var(--yellow);
+}
+
+.scene-actions{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  margin-top:28px;
+}
+
+.scene-count{
+  color:#6f839b;
+  font-size:12px;
+  font-weight:900;
+}
+
+/* =====================================================
+   COMIC
+===================================================== */
+
+.comic{
+  position:relative;
+  min-height:520px;
+  overflow:hidden;
+
+  border:5px solid #111827;
+  border-radius:28px;
+
+  box-shadow:15px 15px 0 #111827;
+}
+
+/* COMPANY */
+
+.comic-company{
+  background:linear-gradient(#8bdfff 0 57%,#e7edf3 57%);
+}
+
+.sun{
+  position:absolute;
+  width:95px;
+  height:95px;
+  right:55px;
+  top:45px;
+  border-radius:50%;
+  background:var(--yellow);
+  border:4px solid #111827;
+}
+
+.company{
+  position:absolute;
+  width:63%;
+  height:55%;
+  left:18.5%;
+  top:28%;
+  background:#fafafa;
+  border:5px solid #111827;
+  border-radius:12px;
+  box-shadow:11px 11px 0 rgba(0,0,0,.3);
+}
+
+.roof{
+  height:18%;
+  background:var(--blue);
+  border-bottom:5px solid #111827;
+}
+
+.sign{
+  position:absolute;
+  top:27px;
+  left:50%;
+  transform:translateX(-50%);
+  padding:8px 14px;
+  background:var(--yellow);
+  color:#111827;
+  border:3px solid #111827;
+  font-weight:1000;
+  white-space:nowrap;
+}
+
+.door{
+  position:absolute;
+  width:18%;
+  height:38%;
+  bottom:0;
+  left:41%;
+  background:#10243e;
+  border:4px solid #111827;
+}
+
+.city{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:40%;
+  display:flex;
+  align-items:end;
+  gap:7px;
+  padding:0 15px;
+}
+
+.build{
+  background:#18334f;
+  border:4px solid #111827;
+  position:relative;
+}
+
+.build:before{
+  content:"";
+  position:absolute;
+  inset:14px;
+  background:repeating-linear-gradient(
+    90deg,
+    var(--yellow) 0 8px,
+    transparent 8px 21px
+  );
+  opacity:.7;
+}
+
+.bb1{height:58%;width:18%}
+.bb2{height:90%;width:22%}
+.bb3{height:65%;width:17%}
+.bb4{height:76%;width:25%}
+
+.stamp{
+  position:absolute;
+  left:28px;
+  top:34px;
+  background:var(--red);
+  color:white;
+  padding:10px 15px;
+  border:4px solid #111827;
+  font-weight:1000;
+  transform:rotate(-7deg);
+}
+
+/* PRIMARY */
+
+.comic-primary{
+  background:linear-gradient(135deg,#d9edff,#f8fbff);
+}
+
+.person{
+  position:absolute;
+  width:110px;
+  height:180px;
+  bottom:15%;
+}
+
+.person.left{
+  left:11%;
+}
+
+.person.right{
+  right:11%;
+}
+
+.person-head{
+  position:absolute;
+  width:60px;
+  height:60px;
+  left:25px;
+  border-radius:50%;
+  background:#c9815b;
+  border:4px solid #111827;
+}
+
+.person-body{
+  position:absolute;
+  width:90px;
+  height:125px;
+  top:55px;
+  left:10px;
+  border-radius:35px 35px 10px 10px;
+  background:var(--blue);
+  border:4px solid #111827;
+}
+
+.person.right .person-body{
+  background:var(--orange);
+}
+
+.person-label{
+  position:absolute;
+  top:-38px;
+  left:-15px;
+  white-space:nowrap;
+  background:white;
+  color:#111827;
+  padding:5px 9px;
+  border:3px solid #111827;
+  border-radius:8px;
+  font-size:11px;
+  font-weight:1000;
+}
+
+.cash{
+  position:absolute;
+  top:46%;
+  left:28%;
+  padding:8px 12px;
+  background:var(--green);
+  color:#063224;
+  border:3px solid #111827;
+  border-radius:9px;
+  font-weight:1000;
+  animation:cash 2.4s infinite;
+}
+
+@keyframes cash{
+  0%{left:28%;opacity:0}
+  15%{opacity:1}
+  80%{left:64%;opacity:1}
+  100%{left:70%;opacity:0}
+}
+
+/* FLOW */
+
+.comic-flow{
+  background:#edf3fa;
+}
+
+.flow{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.flow-node{
+  width:150px;
+  height:135px;
+  background:white;
+  color:#111827;
+  border:4px solid #111827;
+  border-radius:18px;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  font-weight:1000;
+}
+
+.flow-icon{
+  font-size:37px;
+}
+
+.flow-arrow{
+  width:110px;
+  height:9px;
+  background:var(--blue);
+  border-top:3px solid #111827;
+  border-bottom:3px solid #111827;
+}
+
+.flow-label{
+  position:absolute;
+  bottom:35px;
+  left:50%;
+  transform:translateX(-50%);
+  padding:9px 15px;
+  background:var(--blue);
+  color:white;
+  border:3px solid #111827;
+  border-radius:10px;
+  font-weight:1000;
+}
+
+/* SECONDARY */
+
+.comic-secondary{
+  background:linear-gradient(135deg,#eaf4ff,#c4dcfa);
+}
+
+.investor{
+  position:absolute;
+  top:22%;
+  width:185px;
+  height:150px;
+  background:white;
+  color:#111827;
+  border:4px solid #111827;
+  border-radius:18px;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  font-weight:900;
+}
+
+.investor.seller{
+  left:8%;
+}
+
+.investor.buyer{
+  right:8%;
+}
+
+.exchange{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  color:var(--red);
+  font-size:75px;
+  text-shadow:4px 4px #111827;
+}
+
+.stock{
+  position:absolute;
+  left:50%;
+  top:70%;
+  transform:translateX(-50%);
+  background:var(--yellow);
+  color:#111827;
+  padding:12px 18px;
+  border:4px solid #111827;
+  font-weight:1000;
+  animation:stockPulse 1.5s infinite;
+}
+
+@keyframes stockPulse{
+  50%{
+    transform:translateX(-50%) rotate(-3deg) scale(1.05);
+  }
+}
+
+/* LIQUIDITY */
+
+.comic-liquidity{
+  background:linear-gradient(160deg,#071526,#173554);
+}
+
+.blocked{
+  position:absolute;
+  left:10%;
+  top:35%;
+  width:180px;
+  height:135px;
+  background:var(--red);
+  border:5px solid #111827;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  font-size:42px;
+}
+
+.liquid-exit{
+  position:absolute;
+  right:9%;
+  top:24%;
+  width:180px;
+  height:145px;
+  background:var(--green);
+  color:#06291d;
+  border:5px solid #111827;
+  border-radius:15px;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  font-weight:1000;
+}
+
+.liquid-arrow{
+  position:absolute;
+  left:39%;
+  top:48%;
+  color:var(--green);
+  font-size:60px;
+  text-shadow:4px 4px #111827;
+  animation:liquidPulse 1.2s infinite;
+}
+
+@keyframes liquidPulse{
+  50%{transform:scale(1.12)}
+}
+
+/* FINAL */
+
+.comic-final{
+  background:#071526;
+}
+
+.final-box{
+  position:absolute;
+  top:25%;
+  width:40%;
+  height:50%;
+  padding:25px;
+  border:5px solid #111827;
+  border-radius:23px;
+  color:#111827;
+}
+
+.final-primary{
+  left:5%;
+  background:var(--yellow);
+}
+
+.final-secondary{
+  right:5%;
+  background:var(--green);
+}
+
+.final-box h3{
+  font-family:Anton,sans-serif;
+  font-size:40px;
+}
+
+.final-box p{
+  color:#142238;
+  font-weight:800;
+  margin-top:10px;
+  font-size:14px;
+}
+
+.final-circle{
+  position:absolute;
+  width:95px;
+  height:95px;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:white;
+  color:#111827;
+  border:5px solid #111827;
+  display:grid;
+  place-items:center;
+  font-size:30px;
+  font-weight:1000;
+  z-index:5;
+}
+
+/* =====================================================
+   ACADEMY
+===================================================== */
+
+#academy{
+  background:#f3f6fa;
+  color:#111827;
+}
+
+.academy-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:15px;
+}
+
+@media(max-width:900px){
+  .academy-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:550px){
+  .academy-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+.lesson{
+  background:white;
+  border:4px solid #111827;
+  border-radius:18px;
+  padding:20px;
+  min-height:230px;
+  box-shadow:7px 7px 0 #111827;
+  transition:.2s;
+}
+
+.lesson:hover{
+  transform:translateY(-5px);
+}
+
+.lesson-icon{
+  font-size:40px;
+  margin-bottom:15px;
+}
+
+.lesson h3{
+  font-size:19px;
+  margin-bottom:8px;
+}
+
+.lesson p{
+  color:#617188;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.lesson-tag{
+  display:inline-block;
+  margin-top:15px;
+  padding:5px 8px;
+  background:#e9f1ff;
+  color:var(--blue);
+  border-radius:7px;
+  font-size:10px;
+  font-weight:1000;
+}
+
+/* =====================================================
+   MONEY FLOW GAME
+===================================================== */
+
+#moneyGame{
+  background:#071321;
+}
+
+.game-board{
+  max-width:900px;
+  margin:auto;
+  padding:35px;
+  background:#0d1e34;
+  border:3px solid #304862;
+  border-radius:22px;
+}
+
+.flow-game{
+  display:grid;
+  grid-template-columns:1fr 120px 1fr;
+  gap:20px;
+  align-items:center;
+  margin-top:30px;
+}
+
+@media(max-width:700px){
+  .flow-game{
+    grid-template-columns:1fr;
+  }
+}
+
+.drop-zone{
+  min-height:190px;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  padding:20px;
+  border:4px dashed #52708e;
+  border-radius:18px;
+  background:#09182b;
+  transition:.2s;
+}
+
+.drop-zone.selected{
+  border-color:var(--yellow);
+  background:#18283d;
+}
+
+.money-token{
+  padding:18px 25px;
+  background:var(--green);
+  color:#06291d;
+  border:4px solid #111827;
+  border-radius:15px;
+  font-weight:1000;
+  font-size:18px;
+  box-shadow:6px 6px 0 #111827;
+  cursor:pointer;
+}
+
+.flow-vs{
+  text-align:center;
+  font-weight:1000;
+  color:#7389a4;
+}
+
+.feedback{
+  margin-top:20px;
+  padding:16px;
+  border-radius:12px;
+  line-height:1.6;
+}
+
+.feedback.correct{
+  background:#103d30;
+  color:#9ef1d2;
+  border:1px solid #267e63;
+}
+
+.feedback.wrong{
+  background:#431f25;
+  color:#ffb5bb;
+  border:1px solid #9b414b;
+}
+
+/* =====================================================
+   PRIMARY SECONDARY
+===================================================== */
+
+#challenge{
+  background:#f4f6f9;
+  color:#111827;
+}
+
+.challenge-card{
+  max-width:850px;
+  margin:auto;
+  background:white;
+  border:4px solid #111827;
+  border-radius:22px;
+  padding:35px;
+  box-shadow:10px 10px 0 #111827;
+}
+
+.case-number{
+  color:var(--blue);
+  font-weight:1000;
+  letter-spacing:.12em;
+  font-size:12px;
+}
+
+.case-question{
+  font-size:28px;
+  line-height:1.35;
+  font-weight:950;
+  margin:12px 0 25px;
+}
+
+.market-choice{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+@media(max-width:600px){
+  .market-choice{
+    grid-template-columns:1fr;
+  }
+}
+
+.market-choice button{
+  min-height:150px;
+  border:4px solid #111827;
+  border-radius:18px;
+  background:#f4f7fb;
+  color:#111827;
+  font-weight:1000;
+  font-size:20px;
+  transition:.2s;
+}
+
+.market-choice button:hover{
+  transform:translateY(-5px);
+}
+
+.market-choice button.primary-choice{
+  background:#fff5b9;
+}
+
+.market-choice button.secondary-choice{
+  background:#d8f8ec;
+}
+
+/* =====================================================
+   LIQUIDITY LAB
+===================================================== */
+
+#liquidity{
+  background:#081526;
+}
+
+.liquidity-lab{
+  max-width:900px;
+  margin:auto;
+  background:#0e2138;
+  border:3px solid #314963;
+  border-radius:22px;
+  padding:35px;
+}
+
+.liquidity-meter{
+  margin:35px 0;
+}
+
+.meter-line{
+  height:25px;
+  border-radius:20px;
+  background:#172c44;
+  overflow:hidden;
+  border:2px solid #405976;
+}
+
+.meter-fill{
+  height:100%;
+  width:50%;
+  background:linear-gradient(90deg,var(--red),var(--yellow),var(--green));
+  transition:.3s;
+}
+
+input[type=range]{
+  width:100%;
+  accent-color:var(--green);
+  margin:25px 0;
+}
+
+.liq-status{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.liq-box{
+  padding:20px;
+  background:#09182a;
+  border:2px solid #2e4763;
+  border-radius:14px;
+}
+
+.liq-box h3{
+  margin-bottom:8px;
+}
+
+.liq-box p{
+  color:#91a6be;
+  font-size:13px;
+  line-height:1.6;
+}
+
+/* =====================================================
+   MARKET SIMULATOR
+===================================================== */
+
+#simulator{
+  background:#f3f6fa;
+  color:#111827;
+}
+
+.market-dashboard{
+  max-width:1000px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+@media(max-width:800px){
+  .market-dashboard{
+    grid-template-columns:1fr;
+  }
+}
+
+.market-price{
+  background:#101c2c;
+  color:white;
+  border-radius:20px;
+  padding:25px;
+  border:4px solid #111827;
+  box-shadow:8px 8px 0 #111827;
+}
+
+.market-price small{
+  color:#91a5bc;
+}
+
+.price{
+  font-family:Anton,sans-serif;
+  font-size:60px;
+  margin:10px 0;
+}
+
+.up{
+  color:var(--green);
+}
+
+.chart{
+  height:230px;
+  position:relative;
+  overflow:hidden;
+  border-radius:12px;
+  background:
+    linear-gradient(#ffffff10 1px,transparent 1px),
+    linear-gradient(90deg,#ffffff10 1px,transparent 1px);
+  background-size:40px 40px;
+}
+
+.chart svg{
+  width:100%;
+  height:100%;
+}
+
+.trade-panel{
+  background:white;
+  border:4px solid #111827;
+  border-radius:20px;
+  padding:25px;
+  box-shadow:8px 8px 0 #111827;
+}
+
+.trade-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:10px;
+  margin-top:20px;
+}
+
+.trade-buttons button{
+  padding:14px;
+  border:3px solid #111827;
+  border-radius:10px;
+  font-weight:1000;
+}
+
+.buy{
+  background:var(--green);
+}
+
+.sell{
+  background:var(--red);
+  color:white;
+}
+
+.hold{
+  background:var(--yellow);
+}
+
+/* =====================================================
+   FINAL BOSS
+===================================================== */
+
+#boss{
+  background:
+    radial-gradient(circle at 50% 30%,rgba(255,89,100,.12),transparent 30%),
+    #070d17;
+}
+
+.boss-card{
+  max-width:900px;
+  margin:auto;
+  padding:35px;
+  background:#0d192b;
+  border:3px solid #354b65;
+  border-radius:22px;
+}
+
+.boss-case{
+  padding:20px;
+  background:#091526;
+  border-radius:14px;
+  border:2px solid #2d4560;
+  line-height:1.7;
+  color:#b9c8da;
+  margin-bottom:25px;
+}
+
+.boss-q{
+  margin:20px 0;
+}
+
+.boss-q h3{
+  margin-bottom:10px;
+}
+
+.boss-q button{
+  margin:5px;
+  padding:10px 14px;
+  border:2px solid #415a77;
+  border-radius:9px;
+  background:#12253d;
+  color:white;
+}
+
+.boss-q button.selected{
+  background:var(--blue);
+  border-color:var(--cyan);
+}
+
+.boss-result{
+  margin-top:20px;
+  padding:20px;
+  background:#122b23;
+  color:#9df2d4;
+  border:2px solid #2c8769;
+  border-radius:13px;
+}
+
+/* =====================================================
+   REPORT
+===================================================== */
+
+#report{
+  background:#f3f6fa;
+  color:#111827;
+}
+
+.report-card{
+  max-width:900px;
+  margin:auto;
+  background:white;
+  border:4px solid #111827;
+  border-radius:23px;
+  padding:35px;
+  box-shadow:10px 10px 0 #111827;
+}
+
+.report-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  margin-top:25px;
+}
+
+@media(max-width:650px){
+  .report-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+.skill{
+  padding:15px;
+  background:#f4f7fa;
+  border-radius:12px;
+}
+
+.skill-head{
+  display:flex;
+  justify-content:space-between;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.skill-bar{
+  height:11px;
+  background:#dfe5ec;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.skill-fill{
+  height:100%;
+  background:var(--blue);
+}
+
+/* =====================================================
+   ACHIEVEMENTS
+===================================================== */
+
+#achievements{
+  background:#081526;
+}
+
+.achievement-grid{
+  max-width:950px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+@media(max-width:750px){
+  .achievement-grid{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:500px){
+  .achievement-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+.achievement{
+  min-height:180px;
+  padding:22px;
+  background:#0e2138;
+  border:2px solid #2c4662;
+  border-radius:17px;
+  text-align:center;
+  transition:.2s;
+}
+
+.achievement.unlocked{
+  border-color:var(--yellow);
+  background:#182943;
+}
+
+.achievement.locked{
+  filter:grayscale(1);
+  opacity:.5;
+}
+
+.achievement-icon{
+  font-size:45px;
+  margin-bottom:12px;
+}
+
+.achievement h3{
+  font-size:15px;
+}
+
+.achievement p{
+  color:#8197b0;
+  font-size:11px;
+  margin-top:7px;
+  line-height:1.5;
+}
+
+/* =====================================================
+   CERTIFICATE
+===================================================== */
+
+#certificate{
+  background:#f0f3f7;
+  color:#111827;
+}
+
+.certificate{
+  max-width:900px;
+  margin:auto;
+  padding:55px 40px;
+  position:relative;
+  background:
+    linear-gradient(135deg,#fff,#f5f7fa);
+  border:8px solid #111827;
+  box-shadow:15px 15px 0 #111827;
+  text-align:center;
+}
+
+.certificate:before{
+  content:"";
+  position:absolute;
+  inset:15px;
+  border:2px solid var(--yellow);
+  pointer-events:none;
+}
+
+.certificate-label{
+  color:#52657c;
+  font-size:12px;
+  font-weight:1000;
+  letter-spacing:.2em;
+}
+
+.certificate h2{
+  font-family:Anton,sans-serif;
+  font-size:55px;
+  margin:15px 0;
+}
+
+.certificate-name{
+  font-family:Anton,sans-serif;
+  color:var(--blue);
+  font-size:42px;
+  margin:20px 0;
+}
+
+.certificate p{
+  color:#596a7d;
+  line-height:1.7;
+}
+
+.certificate-seal{
+  width:90px;
+  height:90px;
+  margin:25px auto 0;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:var(--yellow);
+  border:5px solid #111827;
+  font-weight:1000;
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer{
+  padding:35px 0;
+  text-align:center;
+  background:#050c15;
+  color:#667b94;
+  font-size:12px;
+}
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:30px;
+  transform:translate(-50%,120px);
+  z-index:9998;
+
+  padding:13px 18px;
+
+  background:#111827;
+  color:white;
+
+  border:2px solid #3b536f;
+  border-radius:12px;
+
+  font-weight:800;
+
+  transition:.3s;
+}
+
+.toast.show{
+  transform:translate(-50%,0);
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:600px){
+
+  .comic{
+    min-height:430px;
+  }
+
+  .flow-node{
+    width:125px;
+    height:115px;
+    font-size:12px;
+  }
+
+  .flow-arrow{
+    width:50px;
+  }
+
+  .investor{
+    width:135px;
+    height:120px;
+    font-size:12px;
+  }
+
+  .final-box{
+    padding:14px;
+  }
+
+  .final-box h3{
+    font-size:27px;
+  }
+
+  .final-box p{
+    font-size:10px;
+  }
+
+  .final-circle{
+    width:75px;
+    height:75px;
+  }
+
+  .liq-status{
+    grid-template-columns:1fr;
+  }
+
+}
+</style>
 </head>
 
 <body>
 
-    <div class="noise"></div>
+<audio
+  id="bgMusic"
+  src="MUSIKGAME.mpeg"
+  loop
+  preload="auto"
+></audio>
 
-    <audio
-        id="bgMusic"
-        src="MUSIKGAME.mpeg"
-        loop
-        preload="auto">
-    </audio>
+<div class="noise"></div>
 
-    <!-- =====================================================
-         HOME
-    ===================================================== -->
+<div id="toast" class="toast"></div>
 
-    <section id="home">
+<!-- =====================================================
+     HOME
+===================================================== -->
 
-        <div class="grid"></div>
+<section id="home" class="page">
 
-        <div class="floating float1">$</div>
-        <div class="floating float2">%</div>
+  <div class="grid"></div>
 
-        <div class="home-content">
+  <div class="floating float1">IPO</div>
+  <div class="floating float2">↗</div>
 
-            <div class="home-label">
-                🎮 INTERACTIVE FINANCIAL LEARNING GAME
+  <div class="home-content container">
+
+    <div class="home-label">
+      🎬 INTERACTIVE FINANCIAL LEARNING
+    </div>
+
+    <div class="logo">
+      MQ<br>01
+    </div>
+
+    <h1>
+      MARKET<br>
+      <span>QUEST</span>
+    </h1>
+
+    <p class="home-sub">
+
+      Sebuah perjalanan interaktif bersama
+      <b>PT SEJAHTERA</b>
+      untuk memahami bagaimana saham bergerak
+      dari <b>pasar primer</b> hingga
+      <b>pasar sekunder</b>.
+
+    </p>
+
+    <div class="home-actions">
+
+      <button
+        class="btn btn-primary"
+        onclick="enterExperience()"
+      >
+        ▶ ENTER MARKET QUEST
+      </button>
+
+    </div>
+
+    <div class="home-small">
+      STORY • ACADEMY • SIMULATION • CHALLENGE • ACHIEVEMENT
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     APP
+===================================================== -->
+
+<div id="app" class="hidden">
+
+<nav class="nav">
+
+  <div class="container nav-inner">
+
+    <div class="nav-brand">
+      MARKET <span>QUEST</span>
+    </div>
+
+    <div class="nav-links">
+
+      <button onclick="showSection('map')">
+        MAP
+      </button>
+
+      <button onclick="showSection('story')">
+        🎬 STORY
+      </button>
+
+      <button onclick="showSection('academy')">
+        📚 ACADEMY
+      </button>
+
+      <button onclick="showSection('moneyGame')">
+        💰 MONEY FLOW
+      </button>
+
+      <button onclick="showSection('challenge')">
+        🎮 CHALLENGE
+      </button>
+
+      <button onclick="showSection('liquidity')">
+        💧 LIQUIDITY
+      </button>
+
+      <button onclick="showSection('simulator')">
+        📈 SIMULATOR
+      </button>
+
+      <button onclick="showSection('report')">
+        🏆 PROGRESS
+      </button>
+
+    </div>
+
+  </div>
+
+</nav>
+
+
+<!-- =====================================================
+     MARKET MAP
+===================================================== -->
+
+<section id="map" class="section">
+
+  <div class="container">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+        YOUR JOURNEY
+      </div>
+
+      <h2>
+        MARKET MAP
+      </h2>
+
+      <p>
+        Ikuti perjalanan PT Sejahtera
+        sampai menjadi seorang
+        <b>Market Master</b>.
+      </p>
+
+    </div>
+
+
+    <div class="map-wrapper">
+
+      <div class="map-line"></div>
+
+      <div
+        class="map-node current"
+        onclick="showSection('story')"
+      >
+
+        <div class="map-icon">
+          🎬
+        </div>
+
+        <div class="map-title">
+          THE STORY
+        </div>
+
+        <div class="map-desc">
+          Ikuti perjalanan PT Sejahtera.
+        </div>
+
+      </div>
+
+
+      <div
+        class="map-node"
+        onclick="showSection('academy')"
+      >
+
+        <div class="map-icon">
+          📚
+        </div>
+
+        <div class="map-title">
+          ACADEMY
+        </div>
+
+        <div class="map-desc">
+          Pelajari konsep inti.
+        </div>
+
+      </div>
+
+
+      <div
+        class="map-node"
+        onclick="showSection('moneyGame')"
+      >
+
+        <div class="map-icon">
+          💰
+        </div>
+
+        <div class="map-title">
+          MONEY FLOW
+        </div>
+
+        <div class="map-desc">
+          Tentukan ke mana dana bergerak.
+        </div>
+
+      </div>
+
+
+      <div
+        class="map-node"
+        onclick="showSection('challenge')"
+      >
+
+        <div class="map-icon">
+          🔄
+        </div>
+
+        <div class="map-title">
+          MARKET DETECTIVE
+        </div>
+
+        <div class="map-desc">
+          Primary atau Secondary?
+        </div>
+
+      </div>
+
+
+      <div
+        class="map-node"
+        onclick="showSection('liquidity')"
+      >
+
+        <div class="map-icon">
+          💧
+        </div>
+
+        <div class="map-title">
+          LIQUIDITY LAB
+        </div>
+
+        <div class="map-desc">
+          Pahami mengapa pasar sekunder penting.
+        </div>
+
+      </div>
+
+
+      <div
+        class="map-node"
+        onclick="showSection('simulator')"
+      >
+
+        <div class="map-icon">
+          📈
+        </div>
+
+        <div class="map-title">
+          MARKET SIMULATOR
+        </div>
+
+        <div class="map-desc">
+          Simulasikan transaksi saham.
+        </div>
+
+      </div>
+
+
+      <div
+        class="map-node"
+        onclick="showSection('boss')"
+      >
+
+        <div class="map-icon">
+          👑
+        </div>
+
+        <div class="map-title">
+          FINAL BOSS
+        </div>
+
+        <div class="map-desc">
+          Pecahkan kasus PT Sejahtera.
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     STORY
+===================================================== -->
+
+<section id="story" class="section">
+
+  <div class="container">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+        CINEMATIC STORY
+      </div>
+
+      <h2>
+        THE JOURNEY
+      </h2>
+
+      <p>
+        Jangan hanya membaca teori.
+        Lihat bagaimana konsep pasar primer
+        dan sekunder bekerja dalam sebuah cerita.
+      </p>
+
+    </div>
+
+
+    <!-- SCENE 1 -->
+
+    <article class="scene active">
+
+      <div class="container scene-grid">
+
+        <div class="scene-copy">
+
+          <div class="eyebrow">
+            SCENE 01 — THE BEGINNING
+          </div>
+
+          <h2>
+            PT SEJAHTERA
+            INGIN TUMBUH.
+          </h2>
+
+          <p>
+
+            PT Sejahtera membutuhkan dana
+            untuk melakukan ekspansi.
+
+            Salah satu alternatif pendanaan
+            adalah menerbitkan saham kepada
+            masyarakat melalui IPO.
+
+          </p>
+
+          <div class="dialogue">
+
+            “Kami membuka kesempatan masyarakat
+            untuk menjadi pemegang saham
+            PT Sejahtera.”
+
+          </div>
+
+          <div class="fact">
+
+            💡
+
+            <div>
+
+              <strong>
+                IPO = Initial Public Offering
+              </strong>
+
+              <br>
+
+              Penawaran saham kepada masyarakat
+              untuk pertama kalinya.
+
             </div>
 
-            <div class="logo">
-                PQ
-            </div>
+          </div>
 
-            <h1>
-                MARKET
-                <br>
-                <span>QUEST</span>
-            </h1>
+          <div class="scene-actions">
 
-            <p class="home-sub">
-                Masuk ke dunia PT Sejahtera dan pelajari
-                bagaimana <b>Primary Market</b>,
-                <b>Secondary Market</b>, dan
-                <b>Liquidity</b> saling terhubung.
-            </p>
+            <button
+              class="btn btn-blue"
+              onclick="nextScene()"
+            >
+              LANJUT →
+            </button>
 
-            <div class="home-actions">
+            <span class="scene-count">
+              01 / 06
+            </span>
 
-                <button
-                    type="button"
-                    class="btn btn-primary"
-                    onclick="enterExperience()">
-
-                    🚀 START MARKET QUEST
-
-                </button>
-
-            </div>
-
-            <div class="home-small">
-                PT SEJAHTERA • FINANCIAL MARKET ADVENTURE
-            </div>
+          </div>
 
         </div>
 
-    </section>
 
-    <!-- =====================================================
-         APP
-    ===================================================== -->
+        <div class="comic comic-company">
 
-    <main id="app" class="hidden">
+          <div class="sun"></div>
 
-        <!-- =================================================
-             NAVIGATION
-        ================================================= -->
+          <div class="stamp">
+            IPO!
+          </div>
 
-        <nav class="nav">
+          <div class="company">
 
-            <div class="container nav-inner">
+            <div class="roof"></div>
 
-                <div class="nav-brand">
-                    MARKET <span>QUEST</span>
-                </div>
+            <div class="sign">
+              PT SEJAHTERA
+            </div>
 
-                <div class="nav-links">
+            <div class="door"></div>
 
-                    <button
-                        type="button"
-                        onclick="showSection('map')">
-                        MAP
-                    </button>
+          </div>
 
-                    <button
-                        type="button"
-                        onclick="showSection('story')">
-                        STORY
-                    </button>
+          <div class="city">
 
-                    <button
-                        type="button"
-                        onclick="showSection('academy')">
-                        ACADEMY
-                    </button>
+            <div class="build bb1"></div>
+            <div class="build bb2"></div>
+            <div class="build bb3"></div>
+            <div class="build bb4"></div>
 
-                    <button
-                        type="button"
-                        onclick="showSection('moneyGame')">
-                        MONEY FLOW
-                    </button>
+          </div>
 
-                    <button
-                        type="button"
-                        onclick="showSection('challenge')">
-                        DETECTIVE
-                    </button>
+        </div>
 
-                    <button
-                        type="button"
-                        onclick="showSection('liquidity')">
-                        LIQUIDITY
-                    </button>
+      </div>
 
-                    <button
-                        type="button"
-                        onclick="showSection('simulator')">
-                        SIMULATOR
-                    </button>
+    </article>
 
-                    <button
-                        type="button"
-                        onclick="showSection('boss')">
-                        FINAL BOSS
-                    </button>
 
-                    <button
-                        type="button"
-                        onclick="showSection('report')">
-                        REPORT
-                    </button>
+    <!-- SCENE 2 -->
 
-                </div>
+    <article class="scene">
+
+      <div class="container scene-grid">
+
+        <div class="scene-copy">
+
+          <div class="eyebrow">
+            SCENE 02 — PRIMARY MARKET
+          </div>
+
+          <h2>
+            SAHAM BARU.
+            DANA MASUK.
+          </h2>
+
+          <p>
+
+            PT Sejahtera menerbitkan
+            <b>saham baru</b>
+            dan menjualnya kepada masyarakat.
+
+            Karena saham tersebut ditawarkan
+            untuk pertama kalinya,
+            transaksi ini termasuk
+            <b>pasar primer</b>.
+
+          </p>
+
+          <div class="dialogue">
+
+            INVESTOR → 💵 → PT SEJAHTERA
+
+            <br>
+
+            <small>
+              Investor memperoleh saham,
+              perusahaan memperoleh dana.
+            </small>
+
+          </div>
+
+          <div class="fact">
+
+            💰
+
+            <div>
+
+              <strong>
+                Dana IPO masuk ke perusahaan.
+              </strong>
+
+              <br>
+
+              Perusahaan memperoleh sumber
+              pendanaan dari investor.
 
             </div>
 
-        </nav>
+          </div>
 
-        <!-- =================================================
-             MARKET MAP
-        ================================================= -->
+          <div class="scene-actions">
 
-        <section id="map" class="section">
+            <button
+              class="btn btn-blue"
+              onclick="nextScene()"
+            >
+              LANJUT →
+            </button>
 
-            <div class="container">
+            <span class="scene-count">
+              02 / 06
+            </span>
 
-                <div class="section-header">
+          </div>
 
-                    <div class="eyebrow">
-                        MISSION MAP
-                    </div>
+        </div>
 
-                    <h2>
-                        YOUR MARKET JOURNEY
-                    </h2>
 
-                    <p>
-                        Ikuti perjalanan untuk memahami bagaimana
-                        perusahaan mendapatkan dana dan bagaimana
-                        investor memperdagangkan saham.
-                    </p>
+        <div class="comic comic-primary">
 
-                </div>
+          <div class="person left">
 
-                <div class="map-wrapper">
+            <div class="person-label">
+              PT SEJAHTERA
+            </div>
 
-                    <div class="map-line"></div>
+            <div class="person-head"></div>
+            <div class="person-body"></div>
 
-                    <div class="map-node current">
+          </div>
 
-                        <div class="map-icon">
-                            🏢
-                        </div>
 
-                        <div class="map-title">
-                            PT SEJAHTERA
-                        </div>
+          <div class="person right">
 
-                        <div class="map-desc">
-                            The company needs capital.
-                        </div>
+            <div class="person-label">
+              INVESTOR
+            </div>
 
-                    </div>
+            <div class="person-head"></div>
+            <div class="person-body"></div>
 
-                    <div class="map-node">
+          </div>
 
-                        <div class="map-icon">
-                            🚀
-                        </div>
 
-                        <div class="map-title">
-                            IPO
-                        </div>
+          <div class="cash">
+            💵 DANA IPO
+          </div>
 
-                        <div class="map-desc">
-                            Enter the Primary Market.
-                        </div>
+        </div>
 
-                    </div>
+      </div>
 
-                    <div class="map-node">
+    </article>
 
-                        <div class="map-icon">
-                            💰
-                        </div>
 
-                        <div class="map-title">
-                            INVESTORS
-                        </div>
+    <!-- SCENE 3 -->
 
-                        <div class="map-desc">
-                            Capital flows to the company.
-                        </div>
+    <article class="scene">
 
-                    </div>
+      <div class="container scene-grid">
 
-                    <div class="map-node">
+        <div class="scene-copy">
 
-                        <div class="map-icon">
-                            🔄
-                        </div>
+          <div class="eyebrow">
+            SCENE 03 — FOLLOW THE MONEY
+          </div>
 
-                        <div class="map-title">
-                            SECONDARY MARKET
-                        </div>
+          <h2>
+            PERHATIKAN
+            ALIRANNYA.
+          </h2>
 
-                        <div class="map-desc">
-                            Investors trade with investors.
-                        </div>
+          <p>
 
-                    </div>
+            Salah satu cara paling mudah
+            membedakan pasar primer adalah
+            dengan melihat siapa yang menjual
+            saham dan siapa yang menerima dana.
 
-                    <div class="map-node">
+          </p>
 
-                        <div class="map-icon">
-                            💧
-                        </div>
+          <div class="fact">
 
-                        <div class="map-title">
-                            LIQUIDITY
-                        </div>
+            🧠
 
-                        <div class="map-desc">
-                            Shares can be bought and sold.
-                        </div>
+            <div>
 
-                    </div>
+              <strong>
+                MARKET FORMULA
+              </strong>
 
-                    <div class="map-node">
+              <br>
 
-                        <div class="map-icon">
-                            👑
-                        </div>
-
-                        <div class="map-title">
-                            MARKET MASTER
-                        </div>
-
-                        <div class="map-desc">
-                            Defeat the Final Boss.
-                        </div>
-
-                    </div>
-
-                </div>
+              Saham baru
+              → dana investor
+              → perusahaan.
 
             </div>
 
-        </section>
+          </div>
 
-        <!-- =================================================
-             STORY
-        ================================================= -->
+          <div class="dialogue">
 
-        <section id="story">
+            “Berarti ketika perusahaan
+            menerbitkan saham baru,
+            uang investor masuk ke perusahaan?”
 
-            <!-- SCENE 1 -->
+            <br><br>
 
-            <div class="scene active">
+            <b>BETUL.</b>
 
-                <div class="container">
+          </div>
 
-                    <div class="scene-grid">
+          <div class="scene-actions">
 
-                        <div class="scene-copy">
+            <button
+              class="btn btn-blue"
+              onclick="nextScene()"
+            >
+              LANJUT →
+            </button>
 
-                            <div class="eyebrow">
-                                CHAPTER 01
-                            </div>
+            <span class="scene-count">
+              03 / 06
+            </span>
 
-                            <h2>
-                                PT SEJAHTERA
-                                <br>
-                                NEEDS MONEY.
-                            </h2>
+          </div>
 
-                            <p>
-                                PT Sejahtera ingin melakukan ekspansi.
-                                Mereka membutuhkan modal untuk membuka
-                                cabang baru dan mengembangkan bisnis.
-                            </p>
+        </div>
 
-                            <div class="dialogue">
-                                “Kalau bisnis mau tumbuh,
-                                kita butuh tambahan modal.”
-                            </div>
 
-                            <div class="fact">
+        <div class="comic comic-flow">
 
-                                <div>
-                                    💡
-                                </div>
+          <div class="flow">
 
-                                <div>
-                                    <strong>
-                                        MISSION:
-                                    </strong>
+            <div class="flow-node">
 
-                                    Pahami dari mana perusahaan
-                                    mendapatkan modal.
-                                </div>
+              <div class="flow-icon">
+                👤
+              </div>
 
-                            </div>
+              INVESTOR
 
-                            <div class="scene-actions">
-
-                                <button
-                                    type="button"
-                                    class="btn btn-primary"
-                                    onclick="nextScene()">
-
-                                    NEXT SCENE →
-
-                                </button>
-
-                                <div class="scene-count">
-                                    01 / 04
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="comic comic-company">
-
-                            <div class="sun"></div>
-
-                            <div class="company">
-
-                                <div class="roof"></div>
-
-                                <div class="sign">
-                                    PT SEJAHTERA
-                                </div>
-
-                                <div class="door"></div>
-
-                            </div>
-
-                            <div class="city">
-
-                                <div class="build bb1"></div>
-                                <div class="build bb2"></div>
-                                <div class="build bb3"></div>
-                                <div class="build bb4"></div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
+              <small>
+                membayar
+              </small>
 
             </div>
 
-            <!-- SCENE 2 -->
+            <div class="flow-arrow"></div>
 
-            <div class="scene">
+            <div class="flow-node">
 
-                <div class="container">
+              <div class="flow-icon">
+                🏢
+              </div>
 
-                    <div class="scene-grid">
+              PT SEJAHTERA
 
-                        <div class="scene-copy">
-
-                            <div class="eyebrow">
-                                CHAPTER 02
-                            </div>
-
-                            <h2>
-                                THE IPO
-                                <br>
-                                ARRIVES.
-                            </h2>
-
-                            <p>
-                                Perusahaan memutuskan untuk menerbitkan
-                                saham baru kepada masyarakat melalui
-                                Initial Public Offering atau IPO.
-                            </p>
-
-                            <div class="dialogue">
-                                “Investor membeli saham baru kita,
-                                dan dana tersebut masuk ke perusahaan.”
-                            </div>
-
-                            <div class="fact">
-
-                                <div>
-                                    🚀
-                                </div>
-
-                                <div>
-                                    <strong>
-                                        PRIMARY MARKET
-                                    </strong>
-
-                                    <br>
-
-                                    Tempat saham baru diterbitkan
-                                    dan dana mengalir kepada perusahaan.
-                                </div>
-
-                            </div>
-
-                            <div class="scene-actions">
-
-                                <button
-                                    type="button"
-                                    class="btn btn-primary"
-                                    onclick="nextScene()">
-
-                                    NEXT SCENE →
-
-                                </button>
-
-                                <div class="scene-count">
-                                    02 / 04
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="comic">
-
-                            <div
-                                style="
-                                    position:absolute;
-                                    inset:0;
-                                    background:
-                                        linear-gradient(
-                                            135deg,
-                                            #172d4b,
-                                            #0b1728
-                                        );
-                                ">
-                            </div>
-
-                            <div
-                                style="
-                                    position:absolute;
-                                    top:15%;
-                                    left:10%;
-                                    right:10%;
-                                    padding:25px;
-                                    background:#f8fafc;
-                                    color:#111827;
-                                    border:5px solid #111827;
-                                    border-radius:20px;
-                                    text-align:center;
-                                    box-shadow:10px 10px 0 #111827;
-                                ">
-
-                                <div
-                                    style="
-                                        font-size:45px;
-                                        margin-bottom:10px;
-                                    ">
-                                    🚀
-                                </div>
-
-                                <div
-                                    style="
-                                        font-family:Anton;
-                                        font-size:45px;
-                                    ">
-                                    IPO
-                                </div>
-
-                                <div
-                                    style="
-                                        margin-top:10px;
-                                        color:#5d6c7d;
-                                    ">
-                                    Initial Public Offering
-                                </div>
-
-                            </div>
-
-                            <div
-                                style="
-                                    position:absolute;
-                                    bottom:18%;
-                                    left:12%;
-                                    right:12%;
-                                    display:flex;
-                                    justify-content:space-between;
-                                    align-items:center;
-                                    color:white;
-                                    font-weight:900;
-                                ">
-
-                                <div style="text-align:center;">
-                                    <div style="font-size:45px;">
-                                        👨‍💼
-                                    </div>
-                                    INVESTOR
-                                </div>
-
-                                <div
-                                    style="
-                                        font-size:40px;
-                                        color:#ffd84a;
-                                    ">
-                                    →
-                                </div>
-
-                                <div style="text-align:center;">
-                                    <div style="font-size:45px;">
-                                        🏢
-                                    </div>
-                                    COMPANY
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
+              <small>
+                menerima dana
+              </small>
 
             </div>
 
-            <!-- SCENE 3 -->
+          </div>
 
-            <div class="scene">
+          <div class="flow-label">
+            PASAR PRIMER
+          </div>
 
-                <div class="container">
+        </div>
 
-                    <div class="scene-grid">
+      </div>
 
-                        <div class="scene-copy">
+    </article>
 
-                            <div class="eyebrow">
-                                CHAPTER 03
-                            </div>
 
-                            <h2>
-                                ANDI WANTS
-                                <br>
-                                TO SELL.
-                            </h2>
+    <!-- SCENE 4 -->
 
-                            <p>
-                                Setelah saham tercatat, Andi ingin menjual
-                                saham yang sudah dimilikinya kepada investor lain.
-                            </p>
+    <article class="scene">
 
-                            <div class="dialogue">
-                                “Saya tidak membeli saham baru dari perusahaan.
-                                Saya membeli saham yang sudah dimiliki investor lain.”
-                            </div>
+      <div class="container scene-grid">
 
-                            <div class="fact">
+        <div class="scene-copy">
 
-                                <div>
-                                    🔄
-                                </div>
+          <div class="eyebrow">
+            SCENE 04 — AFTER LISTING
+          </div>
 
-                                <div>
-                                    <strong>
-                                        SECONDARY MARKET
-                                    </strong>
+          <h2>
+            CERITANYA
+            BERUBAH.
+          </h2>
 
-                                    <br>
+          <p>
 
-                                    Investor membeli dan menjual saham
-                                    yang sudah diterbitkan sebelumnya.
-                                </div>
+            Setelah saham tercatat,
+            saham tersebut dapat diperjualbelikan
+            antar-investor.
 
-                            </div>
+            Sekarang perusahaan bukan pihak
+            yang menjual saham tersebut.
 
-                            <div class="scene-actions">
+          </p>
 
-                                <button
-                                    type="button"
-                                    class="btn btn-primary"
-                                    onclick="nextScene()">
+          <div class="dialogue">
 
-                                    NEXT SCENE →
+            ANDI:
 
-                                </button>
+            <br>
 
-                                <div class="scene-count">
-                                    03 / 04
-                                </div>
+            “Aku mau membeli saham
+            PT Sejahtera.”
 
-                            </div>
+            <br><br>
 
-                        </div>
+            INVESTOR A:
 
-                        <div class="comic">
+            <br>
 
-                            <div
-                                style="
-                                    position:absolute;
-                                    inset:0;
-                                    background:#dff4ff;
-                                ">
-                            </div>
+            “Aku punya sahamnya
+            dan ingin menjual.”
 
-                            <div
-                                style="
-                                    position:absolute;
-                                    left:12%;
-                                    top:18%;
-                                    width:76%;
-                                    height:65%;
-                                    background:#f8fafc;
-                                    border:5px solid #111827;
-                                    border-radius:22px;
-                                    box-shadow:12px 12px 0 #111827;
-                                ">
+          </div>
 
-                                <div
-                                    style="
-                                        padding:20px;
-                                        border-bottom:4px solid #111827;
-                                        font-weight:1000;
-                                        color:#111827;
-                                    ">
-                                    SECONDARY MARKET
-                                </div>
+          <div class="fact">
 
-                                <div
-                                    style="
-                                        height:70%;
-                                        display:flex;
-                                        align-items:center;
-                                        justify-content:center;
-                                        gap:20px;
-                                        color:#111827;
-                                        font-weight:1000;
-                                    ">
+            🔄
 
-                                    <div style="text-align:center;">
-                                        <div style="font-size:55px;">
-                                            👨
-                                        </div>
-                                        ANDI
-                                    </div>
+            <div>
 
-                                    <div
-                                        style="
-                                            font-size:50px;
-                                            color:#1769ff;
-                                        ">
-                                        ⇄
-                                    </div>
+              <strong>
+                INI PASAR SEKUNDER.
+              </strong>
 
-                                    <div style="text-align:center;">
-                                        <div style="font-size:55px;">
-                                            👩
-                                        </div>
-                                        INVESTOR B
-                                    </div>
+              <br>
 
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
+              Saham sudah diterbitkan sebelumnya
+              dan berpindah dari investor
+              ke investor lain.
 
             </div>
 
-            <!-- SCENE 4 -->
+          </div>
 
-            <div class="scene">
+          <div class="scene-actions">
 
-                <div class="container">
+            <button
+              class="btn btn-blue"
+              onclick="nextScene()"
+            >
+              LANJUT →
+            </button>
 
-                    <div class="scene-grid">
+            <span class="scene-count">
+              04 / 06
+            </span>
 
-                        <div class="scene-copy">
+          </div>
 
-                            <div class="eyebrow">
-                                CHAPTER 04
-                            </div>
+        </div>
 
-                            <h2>
-                                WHY DOES
-                                <br>
-                                LIQUIDITY MATTER?
-                            </h2>
 
-                            <p>
-                                Semakin aktif saham diperdagangkan,
-                                semakin mudah investor menemukan pihak
-                                lain untuk membeli atau menjual saham.
-                            </p>
+        <div class="comic comic-secondary">
 
-                            <div class="dialogue">
-                                “Secondary Market membuat saham lebih mudah
-                                diperdagangkan setelah diterbitkan.”
-                            </div>
+          <div class="investor seller">
 
-                            <div class="fact">
+            👨‍💼
 
-                                <div>
-                                    💧
-                                </div>
+            <br>
 
-                                <div>
-                                    <strong>
-                                        LIQUIDITY
-                                    </strong>
+            <b>INVESTOR A</b>
 
-                                    <br>
+            <br>
 
-                                    Kemampuan aset untuk diperjualbelikan
-                                    dengan relatif mudah.
-                                </div>
+            <small>
+              “Saya menjual saham.”
+            </small>
 
-                            </div>
+          </div>
 
-                            <div class="scene-actions">
 
-                                <button
-                                    type="button"
-                                    class="btn btn-green"
-                                    onclick="showSection('academy')">
+          <div class="investor buyer">
 
-                                    START ACADEMY →
+            👨‍🎓
 
-                                </button>
+            <br>
 
-                                <div class="scene-count">
-                                    04 / 04
-                                </div>
+            <b>ANDI</b>
 
-                            </div>
+            <br>
 
-                        </div>
+            <small>
+              “Saya membeli saham.”
+            </small>
 
-                        <div class="comic">
+          </div>
 
-                            <div
-                                style="
-                                    position:absolute;
-                                    inset:0;
-                                    background:
-                                        linear-gradient(
-                                            #10253c,
-                                            #071321
-                                        );
-                                ">
-                            </div>
 
-                            <div
-                                style="
-                                    position:absolute;
-                                    left:12%;
-                                    right:12%;
-                                    top:20%;
-                                    height:60%;
-                                ">
+          <div class="exchange">
+            ⇄
+          </div>
 
-                                <div
-                                    style="
-                                        font-family:Anton;
-                                        font-size:70px;
-                                        color:#35d9ff;
-                                        text-align:center;
-                                    ">
-                                    LIQUIDITY
-                                </div>
 
-                                <div
-                                    style="
-                                        margin-top:25px;
-                                        height:25px;
-                                        background:#1a3049;
-                                        border-radius:30px;
-                                        overflow:hidden;
-                                        border:3px solid #111827;
-                                    ">
+          <div class="stock">
+            📄 SAHAM PT SEJAHTERA
+          </div>
 
-                                    <div
-                                        style="
-                                            width:82%;
-                                            height:100%;
-                                            background:
-                                                linear-gradient(
-                                                    90deg,
-                                                    #ff5964,
-                                                    #ffd84a,
-                                                    #39d59b
-                                                );
-                                        ">
-                                    </div>
+        </div>
 
-                                </div>
+      </div>
 
-                                <div
-                                    style="
-                                        margin-top:20px;
-                                        text-align:center;
-                                        color:#9dafc4;
-                                    ">
-                                    More trading activity →
-                                    easier transactions
-                                </div>
+    </article>
 
-                            </div>
 
-                        </div>
+    <!-- SCENE 5 -->
 
-                    </div>
+    <article class="scene">
 
-                </div>
+      <div class="container scene-grid">
+
+        <div class="scene-copy">
+
+          <div class="eyebrow">
+            SCENE 05 — LIQUIDITY
+          </div>
+
+          <h2>
+            TANPA PASAR
+            SEKUNDER?
+          </h2>
+
+          <p>
+
+            Investor tidak hanya memikirkan
+            bagaimana membeli saham,
+            tetapi juga bagaimana menjual
+            kembali saham tersebut.
+
+          </p>
+
+          <div class="fact">
+
+            💧
+
+            <div>
+
+              <strong>
+                LIKUIDITAS
+              </strong>
+
+              <br>
+
+              Kemudahan aset untuk
+              diperjualbelikan sehingga investor
+              memiliki kesempatan mengubah
+              saham menjadi uang.
 
             </div>
 
-        </section>
+          </div>
+
+          <div class="dialogue">
+
+            “Kalau aku membutuhkan uang,
+            ada pasar tempat aku menjual
+            saham kepada investor lain.”
+
+          </div>
+
+          <div class="scene-actions">
+
+            <button
+              class="btn btn-blue"
+              onclick="nextScene()"
+            >
+              LANJUT →
+            </button>
+
+            <span class="scene-count">
+              05 / 06
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="comic comic-liquidity">
+
+          <div class="blocked">
+            🚧
+          </div>
+
+          <div class="liquid-arrow">
+            ➜➜➜
+          </div>
+
+          <div class="liquid-exit">
+
+            💧
+
+            <br>
+
+            MUDAH
+
+            <br>
+
+            DIPERJUALBELIKAN
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- SCENE 6 -->
+
+    <article class="scene">
+
+      <div class="container scene-grid">
+
+        <div class="scene-copy">
+
+          <div class="eyebrow">
+            SCENE 06 — THE CONNECTION
+          </div>
+
+          <h2>
+            DUA PASAR.
+            SATU EKOSISTEM.
+          </h2>
+
+          <p>
+
+            Pasar primer menyalurkan dana
+            <b>investor → perusahaan</b>.
+
+            <br><br>
+
+            Pasar sekunder memberikan
+            <b>likuiditas</b> melalui
+            <b>investor ↔ investor</b>.
+
+          </p>
+
+          <div class="dialogue">
+
+            <b>KESIMPULAN</b>
+
+            <br><br>
+
+            PRIMARY =
+            Pendanaan perusahaan.
+
+            <br>
+
+            SECONDARY =
+            Likuiditas antar-investor.
+
+          </div>
+
+          <div class="scene-actions">
+
+            <button
+              class="btn btn-primary"
+              onclick="showSection('academy')"
+            >
+              LANJUT KE ACADEMY →
+            </button>
+
+            <span class="scene-count">
+              06 / 06
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="comic comic-final">
+
+          <div class="final-box final-primary">
+
+            <h3>
+              PRIMARY
+            </h3>
+
+            <p>
+              SAHAM BARU
+            </p>
+
+            <p>
+              INVESTOR → PERUSAHAAN
+            </p>
+
+            <p>
+              💰 DANA MASUK
+            </p>
+
+          </div>
+
+
+          <div class="final-box final-secondary">
+
+            <h3>
+              SECONDARY
+            </h3>
+
+            <p>
+              SAHAM SUDAH TERBIT
+            </p>
+
+            <p>
+              INVESTOR ↔ INVESTOR
+            </p>
+
+            <p>
+              💧 LIKUIDITAS
+            </p>
+
+          </div>
+
+
+          <div class="final-circle">
+            ↔
+          </div>
+
+        </div>
+
+      </div>
+
+    </article>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     ACADEMY
+===================================================== -->
+
+<section id="academy" class="section">
+
+  <div class="container">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+        MARKET ACADEMY
+      </div>
+
+      <h2>
+        KNOW THE MARKET.
+      </h2>
+
+      <p>
+        Lima konsep inti yang harus kamu kuasai
+        sebelum menghadapi challenge.
+      </p>
+
+    </div>
+
+
+    <div class="academy-grid">
+
+      <div class="lesson">
+
+        <div class="lesson-icon">
+          🏢
+        </div>
+
+        <h3>
+          Pasar Primer
+        </h3>
+
+        <p>
+          Tempat perusahaan menerbitkan
+          dan menawarkan saham baru
+          kepada investor.
+        </p>
+
+        <span class="lesson-tag">
+          FUNDING
+        </span>
+
+      </div>
+
+
+      <div class="lesson">
+
+        <div class="lesson-icon">
+          🔄
+        </div>
+
+        <h3>
+          Pasar Sekunder
+        </h3>
+
+        <p>
+          Tempat investor memperjualbelikan
+          saham yang sudah diterbitkan
+          sebelumnya.
+        </p>
+
+        <span class="lesson-tag">
+          TRADING
+        </span>
+
+      </div>
+
+
+      <div class="lesson">
+
+        <div class="lesson-icon">
+          💰
+        </div>
+
+        <h3>
+          Aliran Dana
+        </h3>
+
+        <p>
+          Pada pasar primer dana mengalir
+          dari investor kepada perusahaan.
+        </p>
+
+        <span class="lesson-tag">
+          MONEY FLOW
+        </span>
+
+      </div>
+
+
+      <div class="lesson">
+
+        <div class="lesson-icon">
+          💧
+        </div>
+
+        <h3>
+          Likuiditas
+        </h3>
+
+        <p>
+          Kemudahan investor menjual
+          kembali saham yang dimilikinya.
+        </p>
+
+        <span class="lesson-tag">
+          LIQUIDITY
+        </span>
+
+      </div>
+
+
+      <div class="lesson">
+
+        <div class="lesson-icon">
+          🔗
+        </div>
+
+        <h3>
+          Hubungan Keduanya
+        </h3>
+
+        <p>
+          Pasar primer menyediakan pendanaan,
+          pasar sekunder menyediakan likuiditas.
+        </p>
+
+        <span class="lesson-tag">
+          ECOSYSTEM
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     MONEY FLOW GAME
+===================================================== -->
+
+<section id="moneyGame" class="section">
+
+  <div class="container">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+        MINI GAME 01
+      </div>
+
+      <h2>
+        WHERE DOES THE MONEY GO?
+      </h2>
+
+      <p>
+        PT Sejahtera baru saja melakukan IPO.
+        Klik pihak yang menerima dana hasil IPO.
+      </p>
+
+    </div>
+
+
+    <div class="game-board">
+
+      <div style="text-align:center">
+
+        <div class="money-token">
+          💵 DANA IPO
+        </div>
+
+        <p
+          style="
+          margin-top:15px;
+          color:#91a4bb;
+          font-size:13px;
+          "
+        >
+          Pilih tujuan aliran dana.
+        </p>
+
+      </div>
+
+
+      <div class="flow-game">
+
+        <div
+          class="drop-zone"
+          onclick="moneyAnswer('company')"
+        >
+
+          <div style="font-size:45px">
+            🏢
+          </div>
+
+          <b>
+            PT SEJAHTERA
+          </b>
+
+          <small>
+            Perusahaan penerbit
+          </small>
+
+        </div>
+
+
+        <div class="flow-vs">
+          OR
+        </div>
+
+
+        <div
+          class="drop-zone"
+          onclick="moneyAnswer('investor')"
+        >
+
+          <div style="font-size:45px">
+            👨‍💼
+          </div>
+
+          <b>
+            INVESTOR LAIN
+          </b>
+
+          <small>
+            Pemegang saham
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <div id="moneyFeedback"></div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     PRIMARY SECONDARY CHALLENGE
+===================================================== -->
+
+<section id="challenge" class="section">
+
+  <div class="container">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+        MINI GAME 02
+      </div>
+
+      <h2>
+        MARKET DETECTIVE
+      </h2>
+
+      <p>
+        Baca situasinya.
+        Tentukan apakah transaksi tersebut
+        termasuk pasar primer atau sekunder.
+      </p>
+
+    </div>
+
+
+    <div id="challengeArea"></div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     LIQUIDITY LAB
+===================================================== -->
+
+<section id="liquidity" class="section">
+
+  <div class="container">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+        INTERACTIVE LAB
+      </div>
+
+      <h2>
+        LIQUIDITY LAB
+      </h2>
+
+      <p>
+        Geser tingkat likuiditas dan lihat
+        bagaimana kondisi pasar sekunder
+        memengaruhi kemudahan investor
+        menjual kembali saham.
+      </p>
+
+    </div>
+
+
+    <div class="liquidity-lab">
+
+      <h3>
+        MARKET LIQUIDITY
+      </h3>
+
+      <input
+        type="range"
+        min="0"
+        max="100"
+        value="50"
+        id="liquidityRange"
+        oninput="updateLiquidity()"
+      >
+
+      <div class="meter-line">
+
+        <div
+          class="meter-fill"
+          id="meterFill"
+        ></div>
+
+      </div>
+
+
+      <div
+        style="
+        display:flex;
+        justify-content:space-between;
+        margin-top:8px;
+        color:#8196ae;
+        font-size:12px;
+        "
+      >
+
+        <span>
+          LOW
+        </span>
+
+        <span>
+          HIGH
+        </span>
+
+      </div>
+
+
+      <div class="liq-status">
+
+        <div class="liq-box">
+
+          <h3 id="liqTitle">
+            MODERATE LIQUIDITY
+          </h3>
+
+          <p id="liqDescription">
+
+            Investor memiliki kesempatan
+            untuk menjual saham, tetapi
+            aktivitas pasar masih sedang.
+
+          </p>
+
+        </div>
+
+
+        <div class="liq-box">
+
+          <h3>
+            💡 WHAT IT MEANS
+          </h3>
+
+          <p>
+
+            Pasar sekunder menyediakan
+            mekanisme jual beli antar-investor
+            dan membantu menyediakan likuiditas.
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     SIMULATOR
+===================================================== -->
+
+<section id="simulator" class="section">
+
+  <div class="container">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+        MARKET SIMULATOR
+      </div>
+
+      <h2>
+        PT SEJAHTERA
+        TRADING DESK
+      </h2>
+
+      <p>
+        Simulasi sederhana untuk memahami
+        aktivitas perdagangan setelah saham
+        tercatat. Ini adalah simulasi edukasi,
+        bukan rekomendasi investasi.
+      </p>
+
+    </div>
+
+
+    <div class="market-dashboard">
+
+      <div class="market-price">
+
+        <small>
+          PT SEJAHTERA
+        </small>
+
+        <div class="price">
+          Rp <span id="stockPrice">1.250</span>
+        </div>
+
+        <div class="up">
+          ▲ +4.8%
+        </div>
+
+
+        <div
+          class="chart"
+          style="margin-top:20px"
+        >
+
+          <svg
+            viewBox="0 0 500 220"
+            preserveAspectRatio="none"
+          >
+
+            <polyline
+              points="
+              0,180
+              40,170
+              80,185
+              120,135
+              160,150
+              200,110
+              240,125
+              280,80
+              320,95
+              360,55
+              400,75
+              450,35
+              500,50"
+              fill="none"
+              stroke="#39d59b"
+              stroke-width="5"
+            />
+
+          </svg>
+
+        </div>
+
+      </div>
+
+
+      <div class="trade-panel">
+
+        <h3>
+          YOUR ACTION
+        </h3>
+
+        <p
+          style="
+          color:#697a8e;
+          margin-top:8px;
+          line-height:1.6;
+          "
+        >
+
+          Bayangkan kamu adalah investor
+          yang melakukan transaksi setelah
+          saham tercatat di bursa.
+
+        </p>
+
+
+        <div class="trade-buttons">
+
+          <button
+            class="buy"
+            onclick="trade('BUY')"
+          >
+            BUY
+          </button>
+
+          <button
+            class="hold"
+            onclick="trade('HOLD')"
+          >
+            HOLD
+          </button>
+
+          <button
+            class="sell"
+            onclick="trade('SELL')"
+          >
+            SELL
+          </button>
+
+        </div>
+
+
+        <div
+          id="tradeResult"
+          style="
+          margin-top:20px;
+          padding:15px;
+          background:#f2f5f8;
+          border-radius:10px;
+          color:#44566b;
+          line-height:1.6;
+          "
+        >
+
+          Pilih tindakan.
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     FINAL BOSS
+===================================================== -->
+
+<section id="boss" class="section">
+
+  <div class="container">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+        FINAL MISSION
+      </div>
+
+      <h2>
+        THE MARKET BOSS
+      </h2>
+
+      <p>
+        Gabungkan semua pengetahuan
+        yang sudah kamu pelajari.
+      </p>
+
+    </div>
+
+
+    <div class="boss-card">
+
+      <div class="boss-case">
+
+        <b>
+          CASE: PT SEJAHTERA
+        </b>
+
+        <br><br>
+
+        PT Sejahtera menerbitkan saham baru
+        kepada masyarakat melalui IPO.
+
+        Setelah saham tercatat di bursa,
+        Andi membeli saham PT Sejahtera
+        dari Investor A.
+
+        Beberapa waktu kemudian,
+        Investor A ingin menjual sahamnya
+        kembali kepada investor lain.
+
+        <br><br>
+
+        <b>
+          Pecahkan tiga pertanyaan berikut.
+        </b>
+
+      </div>
+
+
+      <div class="boss-q">
+
+        <h3>
+          01. Transaksi IPO termasuk?
+        </h3>
+
+        <button
+          onclick="bossSelect(1,'primary',this)"
+        >
+          PRIMARY
+        </button>
+
+        <button
+          onclick="bossSelect(1,'secondary',this)"
+        >
+          SECONDARY
+        </button>
+
+      </div>
+
+
+      <div class="boss-q">
+
+        <h3>
+          02. Transaksi Andi termasuk?
+        </h3>
+
+        <button
+          onclick="bossSelect(2,'primary',this)"
+        >
+          PRIMARY
+        </button>
+
+        <button
+          onclick="bossSelect(2,'secondary',this)"
+        >
+          SECONDARY
+        </button>
+
+      </div>
+
+
+      <div class="boss-q">
+
+        <h3>
+          03. Fungsi pasar sekunder yang paling relevan?
+        </h3>
+
+        <button
+          onclick="bossSelect(3,'funding',this)"
+        >
+          Menerbitkan saham baru
+        </button>
+
+        <button
+          onclick="bossSelect(3,'liquidity',this)"
+        >
+          Memberikan likuiditas
+        </button>
+
+      </div>
+
+
+      <button
+        class="btn btn-primary"
+        onclick="checkBoss()"
+        style="margin-top:20px"
+      >
+        ⚡ SUBMIT FINAL ANSWER
+      </button>
+
+
+      <div id="bossResult"></div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     REPORT
+===================================================== -->
+
+<section id="report" class="section">
+
+  <div class="container">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+        LEARNING REPORT
+      </div>
+
+      <h2>
+        YOUR MARKET PROFILE
+      </h2>
+
+      <p>
+        Ringkasan pemahamanmu terhadap
+        konsep yang sudah dipelajari.
+      </p>
+
+    </div>
+
+
+    <div class="report-card">
+
+      <h2>
+        KNOWLEDGE SCORE
+      </h2>
+
+      <div
+        style="
+        font-family:Anton;
+        font-size:70px;
+        color:#1769ff;
+        margin-top:5px;
+        "
+        id="overallScore"
+      >
+        0%
+      </div>
+
+
+      <div class="report-grid">
+
+        <div class="skill">
+
+          <div class="skill-head">
+
+            <span>
+              Primary Market
+            </span>
+
+            <span>
+              100%
+            </span>
+
+          </div>
+
+          <div class="skill-bar">
+            <div
+              class="skill-fill"
+              style="width:100%"
+            ></div>
+          </div>
+
+        </div>
+
+
+        <div class="skill">
+
+          <div class="skill-head">
+
+            <span>
+              Secondary Market
+            </span>
+
+            <span>
+              100%
+            </span>
+
+          </div>
+
+          <div class="skill-bar">
+            <div
+              class="skill-fill"
+              style="width:100%"
+            ></div>
+          </div>
+
+        </div>
+
+
+        <div class="skill">
+
+          <div class="skill-head">
+
+            <span>
+              Money Flow
+            </span>
+
+            <span id="moneySkill">
+              0%
+            </span>
+
+          </div>
+
+          <div class="skill-bar">
+            <div
+              class="skill-fill"
+              id="moneySkillBar"
+              style="width:0%"
+            ></div>
+          </div>
+
+        </div>
+
+
+        <div class="skill">
+
+          <div class="skill-head">
+
+            <span>
+              Market Detective
+            </span>
+
+            <span id="challengeSkill">
+              0%
+            </span>
+
+          </div>
+
+          <div class="skill-bar">
+            <div
+              class="skill-fill"
+              id="challengeSkillBar"
+              style="width:0%"
+            ></div>
+          </div>
+
+        </div>
+
+
+        <div class="skill">
+
+          <div class="skill-head">
+
+            <span>
+              Liquidity
+            </span>
+
+            <span id="liquiditySkill">
+              50%
+            </span>
+
+          </div>
+
+          <div class="skill-bar">
+            <div
+              class="skill-fill"
+              id="liquiditySkillBar"
+              style="width:50%"
+            ></div>
+          </div>
+
+        </div>
+
+
+        <div class="skill">
+
+          <div class="skill-head">
+
+            <span>
+              Final Boss
+            </span>
+
+            <span id="bossSkill">
+              0%
+            </span>
+
+          </div>
+
+          <div class="skill-bar">
+            <div
+              class="skill-fill"
+              id="bossSkillBar"
+              style="width:0%"
+            ></div>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div
+        style="
+        margin-top:30px;
+        padding:20px;
+        background:#fff8d9;
+        border:3px solid #111827;
+        border-radius:14px;
+        line-height:1.65;
+        "
+      >
+
+        <b>
+          🧠 CORE TAKEAWAY
+        </b>
+
+        <br><br>
+
+        Pasar primer berperan dalam
+        menyalurkan dana dari investor
+        kepada perusahaan melalui penerbitan
+        saham baru.
+
+        <br><br>
+
+        Pasar sekunder memungkinkan
+        investor memperjualbelikan saham
+        yang sudah diterbitkan sehingga
+        memberikan likuiditas.
+
+        <br><br>
+
+        <b>
+          Keduanya saling berkaitan
+          dalam mendukung aktivitas pasar modal.
+        </b>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     ACHIEVEMENTS
+===================================================== -->
+
+<section id="achievements" class="section">
+
+  <div class="container">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+        ACHIEVEMENTS
+      </div>
+
+      <h2>
+        UNLOCK YOUR BADGES.
+      </h2>
+
+      <p>
+        Setiap konsep yang kamu kuasai
+        membuka achievement baru.
+      </p>
+
+    </div>
+
+
+    <div class="achievement-grid">
+
+      <div
+        class="achievement unlocked"
+        id="achievementStory"
+      >
+
+        <div class="achievement-icon">
+          🎬
+        </div>
+
+        <h3>
+          STORY STARTER
+        </h3>
+
+        <p>
+          Menyelesaikan perjalanan
+          cerita PT Sejahtera.
+        </p>
+
+      </div>
+
+
+      <div
+        class="achievement locked"
+        id="achievementMoney"
+      >
+
+        <div class="achievement-icon">
+          💰
+        </div>
+
+        <h3>
+          MONEY TRACKER
+        </h3>
+
+        <p>
+          Menentukan aliran dana
+          IPO dengan benar.
+        </p>
+
+      </div>
+
+
+      <div
+        class="achievement locked"
+        id="achievementDetective"
+      >
+
+        <div class="achievement-icon">
+          🔍
+        </div>
+
+        <h3>
+          MARKET DETECTIVE
+        </h3>
+
+        <p>
+          Mengidentifikasi transaksi
+          primary dan secondary.
+        </p>
+
+      </div>
+
+
+      <div
+        class="achievement locked"
+        id="achievementLiquidity"
+      >
+
+        <div class="achievement-icon">
+          💧
+        </div>
+
+        <h3>
+          LIQUIDITY EXPERT
+        </h3>
+
+        <p>
+          Memahami fungsi likuiditas
+          pasar sekunder.
+        </p>
+
+      </div>
+
+
+      <div
+        class="achievement locked"
+        id="achievementSimulator"
+      >
+
+        <div class="achievement-icon">
+          📈
+        </div>
+
+        <h3>
+          TRADING OBSERVER
+        </h3>
+
+        <p>
+          Mencoba market simulator.
+        </p>
+
+      </div>
+
+
+      <div
+        class="achievement locked"
+        id="achievementBoss"
+      >
+
+        <div class="achievement-icon">
+          👑
+        </div>
+
+        <h3>
+          MARKET MASTER
+        </h3>
+
+        <p>
+          Menyelesaikan Final Boss.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     CERTIFICATE
+===================================================== -->
+
+<section id="certificate" class="section">
+
+  <div class="container">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+        COMPLETION
+      </div>
+
+      <h2>
+        MARKET QUEST CERTIFICATE
+      </h2>
+
+      <p>
+        Masukkan nama untuk membuat
+        kartu sertifikat digital.
+      </p>
+
+    </div>
+
+
+    <div class="certificate">
+
+      <div class="certificate-label">
+        CERTIFICATE OF COMPLETION
+      </div>
+
+      <h2>
+        MARKET QUEST
+      </h2>
+
+      <p>
+        This certifies that
+      </p>
+
+      <div
+        class="certificate-name"
+        id="certificateName"
+      >
+        MARKET LEARNER
+      </div>
+
+      <p>
+        telah menyelesaikan pembelajaran interaktif
+        mengenai
+        <b>Primary Market & Secondary Market</b>
+        melalui studi kasus PT Sejahtera.
+      </p>
+
+      <div class="certificate-seal">
+        MQ<br>✓
+      </div>
+
+      <p style="margin-top:20px;font-size:11px">
+        Educational simulation • PT Sejahtera is fictional
+      </p>
+
+    </div>
+
+
+    <div
+      style="
+      text-align:center;
+      margin-top:30px;
+      "
+    >
+
+      <input
+        id="nameInput"
+        type="text"
+        placeholder="Masukkan nama kamu..."
+        oninput="changeName()"
+        style="
+        padding:14px 16px;
+        width:min(400px,90%);
+        border:3px solid #111827;
+        border-radius:12px;
+        outline:none;
+        "
+      >
+
+      <button
+        class="btn btn-primary"
+        onclick="printCertificate()"
+        style="margin-left:8px"
+      >
+        🖨 PRINT
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<footer class="footer">
+
+  <div class="container">
+
+    <b>
+      MARKET QUEST — PT SEJAHTERA
+    </b>
+
+    <br><br>
+
+    Interactive educational simulation
+    tentang pasar primer dan pasar sekunder.
+
+    <br>
+
+    PT Sejahtera merupakan perusahaan fiktif.
+
+  </div>
+
+</footer>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   GLOBAL STATE
+===================================================== */
+
+let storyScene = 0;
+
+let moneyCompleted = false;
+
+let challengeIndex = 0;
+
+let challengeCorrect = 0;
+
+let simulatorPlayed = false;
+
+let bossAnswers = {};
+
+let bossCompleted = false;
+
+
+/* =====================================================
+   ENTER EXPERIENCE
+===================================================== */
+
+function enterExperience(){
+
+  const home = document.getElementById("home");
+  const app = document.getElementById("app");
+  const music = document.getElementById("bgMusic");
+
+  if(home) home.classList.add("hidden");
+  if(app) app.classList.remove("hidden");
+
+  // Musik dimulai dari klik ENTER agar tidak diblokir browser.
+  if(music){
+    music.volume = 0.35;
+    music.play().catch(error => {
+      console.log("Musik belum bisa diputar:", error);
+    });
+  }
+
+  // Pastikan Market Detective sudah dirender ketika dibuka nanti.
+  showSection("map");
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function showSection(id){
+
+  const element = document.getElementById(id);
+  if(!element) return;
+
+  // Render sebelum scroll supaya area game tidak kosong.
+  if(id === "challenge") renderChallenge();
+  if(id === "report") updateReport();
+  if(id === "liquidity") updateLiquidity();
+
+  requestAnimationFrame(() => {
+    element.scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+  });
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function toast(message){
+
+  const el = document.getElementById("toast");
+  if(!el) return;
+
+  el.textContent = message;
+  el.classList.add("show");
+
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(() => {
+    el.classList.remove("show");
+  }, 2500);
+}
+
+
+/* =====================================================
+   STORY
+===================================================== */
+
+const storyScenes = document.querySelectorAll(".scene");
+
+function nextScene(){
+
+  if(storyScene >= storyScenes.length - 1) return;
+
+  storyScene++;
+
+  storyScenes.forEach((scene,index) => {
+    scene.classList.toggle("active", index === storyScene);
+  });
+
+  const story = document.getElementById("story");
+  if(story){
+    story.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+
+  if(storyScene === storyScenes.length - 1){
+    unlock("achievementStory");
+  }
+}
+
+
+/* =====================================================
+   MONEY FLOW GAME
+===================================================== */
+
+function moneyAnswer(choice){
+
+  const feedback = document.getElementById("moneyFeedback");
+  if(!feedback) return;
+
+  if(choice === "company"){
+
+    moneyCompleted = true;
+
+    feedback.innerHTML = `
+      <div class="feedback correct">
+        <b>✓ CORRECT!</b>
+        <br><br>
+        Dana hasil IPO masuk kepada
+        <b>PT Sejahtera</b> karena perusahaan
+        merupakan pihak yang menerbitkan dan menjual saham baru.
+        <br><br>
+        <b>PRIMARY MARKET = INVESTOR → PERUSAHAAN</b>
+      </div>
+    `;
+
+    unlock("achievementMoney");
+    toast("Money Tracker unlocked!");
+
+  }else{
+
+    feedback.innerHTML = `
+      <div class="feedback wrong">
+        <b>✕ BELUM TEPAT.</b>
+        <br><br>
+        Ingat: pada IPO, perusahaan menerbitkan saham baru.
+        Jadi dana hasil penjualan saham masuk kepada perusahaan.
+      </div>
+    `;
+  }
+
+  updateReport();
+}
+
+
+/* =====================================================
+   MARKET DETECTIVE
+===================================================== */
+
+const challengeCases = [
+  {
+    text:"PT Sejahtera menerbitkan saham baru kepada masyarakat untuk pertama kalinya melalui IPO.",
+    answer:"primary",
+    explanation:"Ini pasar primer karena perusahaan menerbitkan saham baru dan memperoleh dana dari investor."
+  },
+  {
+    text:"Andi membeli saham PT Sejahtera dari Investor A yang sudah memiliki saham tersebut.",
+    answer:"secondary",
+    explanation:"Ini pasar sekunder karena transaksi terjadi antar-investor atas saham yang sudah diterbitkan."
+  },
+  {
+    text:"Perusahaan menawarkan saham baru kepada masyarakat dan menerima dana dari hasil penjualan saham.",
+    answer:"primary",
+    explanation:"Ciri pasar primer adalah penerbitan saham baru dan dana mengalir kepada perusahaan."
+  },
+  {
+    text:"Budi menjual saham PT Sejahtera kepada Andi setelah saham tercatat di bursa.",
+    answer:"secondary",
+    explanation:"Budi dan Andi merupakan investor. Saham yang diperdagangkan sudah diterbitkan sebelumnya."
+  },
+  {
+    text:"Investor membeli saham baru yang ditawarkan perusahaan untuk pertama kalinya.",
+    answer:"primary",
+    explanation:"Investor membeli saham baru langsung dalam proses penawaran oleh perusahaan."
+  },
+  {
+    text:"Investor A menjual saham yang sudah dimilikinya kepada Investor B.",
+    answer:"secondary",
+    explanation:"Ini merupakan jual beli antar-investor atas saham yang sudah beredar."
+  }
+];
+
+let challengeAnswered = false;
+let challengeCounted = false;
+
+function renderChallenge(){
+
+  const area = document.getElementById("challengeArea");
+  if(!area) return;
+
+  if(challengeIndex < 0) challengeIndex = 0;
+  if(challengeIndex >= challengeCases.length){
+    challengeIndex = challengeCases.length - 1;
+  }
+
+  const item = challengeCases[challengeIndex];
+  challengeAnswered = false;
+  challengeCounted = false;
+
+  area.innerHTML = `
+    <div class="challenge-card">
+      <div class="case-number">
+        MARKET CASE ${String(challengeIndex + 1).padStart(2,"0")}
+        / ${challengeCases.length}
+      </div>
+
+      <div class="case-question">${item.text}</div>
+
+      <div class="market-choice">
+        <button
+          type="button"
+          class="primary-choice"
+          data-answer="primary"
+          onclick="answerChallenge('primary', this)"
+        >
+          🏢<br><br>
+          PRIMARY MARKET
+          <br>
+          <small>Saham baru • Dana ke perusahaan</small>
+        </button>
+
+        <button
+          type="button"
+          class="secondary-choice"
+          data-answer="secondary"
+          onclick="answerChallenge('secondary', this)"
+        >
+          🔄<br><br>
+          SECONDARY MARKET
+          <br>
+          <small>Antar-investor • Likuiditas</small>
+        </button>
+      </div>
+
+      <div id="challengeFeedback"></div>
+    </div>
+  `;
+}
+
+function answerChallenge(answer, clickedButton){
+
+  const item = challengeCases[challengeIndex];
+  const feedback = document.getElementById("challengeFeedback");
+  const buttons = document.querySelectorAll("#challengeArea .market-choice button");
+
+  if(!feedback || !item || challengeAnswered) return;
+
+  // Tandai hanya tombol yang benar-benar diklik.
+  buttons.forEach(button => button.classList.remove("selected"));
+  if(clickedButton) clickedButton.classList.add("selected");
+
+  challengeAnswered = true;
+
+  if(answer === item.answer){
+
+    if(!challengeCounted){
+      challengeCorrect++;
+      challengeCounted = true;
+    }
+
+    buttons.forEach(button => button.disabled = true);
+
+    feedback.innerHTML = `
+      <div class="feedback correct">
+        <b>✓ CORRECT!</b>
+        <br><br>
+        ${item.explanation}
+        <br><br>
+        <button type="button" class="btn btn-green" onclick="nextChallenge()">
+          NEXT CASE →
+        </button>
+      </div>
+    `;
+
+    updateReport();
+
+  }else{
+
+    // Jawaban salah tidak mengunci soal.
+    challengeAnswered = false;
+
+    feedback.innerHTML = `
+      <div class="feedback wrong">
+        <b>✕ CHECK AGAIN.</b>
+        <br><br>
+        Petunjuk: tanyakan pada diri sendiri:
+        <br><br>
+        <b>“Apakah sahamnya baru diterbitkan oleh perusahaan?”</b>
+      </div>
+    `;
+  }
+}
+
+function nextChallenge(){
+
+  if(challengeIndex < challengeCases.length - 1){
+    challengeIndex++;
+    renderChallenge();
+    return;
+  }
+
+  unlock("achievementDetective");
+  toast(`Challenge complete: ${challengeCorrect}/${challengeCases.length}`);
+  updateReport();
+
+  const area = document.getElementById("challengeArea");
+  if(!area) return;
+
+  area.innerHTML = `
+    <div class="challenge-card" style="text-align:center">
+      <div style="font-size:60px">🔍</div>
+      <h2>MARKET DETECTIVE COMPLETE</h2>
+      <p style="margin:15px 0;color:#64748b">
+        Kamu menyelesaikan ${challengeCases.length} market cases.
+      </p>
+      <div style="font-family:Anton;font-size:65px;color:#1769ff">
+        ${challengeCorrect}/${challengeCases.length}
+      </div>
+      <button type="button" class="btn btn-blue" onclick="showSection('liquidity')">
+        NEXT: LIQUIDITY LAB →
+      </button>
+    </div>
+  `;
+}
+
+
+/* =====================================================
+   LIQUIDITY LAB
+===================================================== */
+
+function updateLiquidity(){
+
+  const range = document.getElementById("liquidityRange");
+  const meter = document.getElementById("meterFill");
+  const title = document.getElementById("liqTitle");
+  const desc = document.getElementById("liqDescription");
+
+  if(!range || !meter || !title || !desc) return;
+
+  const value = Number(range.value);
+  meter.style.width = value + "%";
+
+  if(value < 30){
+    title.textContent = "LOW LIQUIDITY";
+    desc.textContent = "Aktivitas perdagangan rendah. Investor mungkin lebih sulit menjual saham dengan cepat.";
+  }else if(value < 70){
+    title.textContent = "MODERATE LIQUIDITY";
+    desc.textContent = "Investor memiliki kesempatan menjual saham, tetapi aktivitas pasar masih sedang.";
+  }else{
+    title.textContent = "HIGH LIQUIDITY";
+    desc.textContent = "Aktivitas perdagangan lebih tinggi sehingga investor memiliki kesempatan lebih mudah memperjualbelikan saham.";
+    unlock("achievementLiquidity");
+  }
+
+  const skill = document.getElementById("liquiditySkill");
+  const skillBar = document.getElementById("liquiditySkillBar");
+
+  if(skill) skill.textContent = value + "%";
+  if(skillBar) skillBar.style.width = value + "%";
+}
+
+
+/* =====================================================
+   SIMULATOR
+===================================================== */
+
+function trade(action){
+
+  simulatorPlayed = true;
+
+  const result = document.getElementById("tradeResult");
+  if(!result) return;
+
+  if(action === "BUY"){
+    result.innerHTML = `
+      <b style="color:#13845d">BUY SELECTED</b>
+      <br><br>
+      Dalam simulasi, kamu membeli saham dari pihak yang menjual.
+      Ini menggambarkan aktivitas pasar sekunder setelah saham tercatat.
+    `;
+  }else if(action === "SELL"){
+    result.innerHTML = `
+      <b style="color:#c9323c">SELL SELECTED</b>
+      <br><br>
+      Dalam simulasi, kamu menjual saham kepada investor lain.
+      Inilah salah satu fungsi penting pasar sekunder: menyediakan likuiditas.
+    `;
+  }else{
+    result.innerHTML = `
+      <b>HOLD SELECTED</b>
+      <br><br>
+      Kamu memilih tidak melakukan transaksi saat ini. Dalam pasar sekunder,
+      investor dapat memilih apakah akan membeli, menjual, atau mempertahankan kepemilikannya.
+    `;
+  }
+
+  unlock("achievementSimulator");
+  updateReport();
+}
+
+
+/* =====================================================
+   FINAL BOSS
+===================================================== */
+
+function bossSelect(question, value, clickedButton){
+
+  const group = clickedButton ? clickedButton.closest(".boss-q") : null;
+
+  // Simpan tepat satu jawaban untuk pertanyaan ini.
+  bossAnswers[question] = value;
+
+  // Hanya tombol dalam pertanyaan yang sama yang boleh berubah.
+  if(group){
+    group.querySelectorAll("button").forEach(button => {
+      button.classList.remove("selected");
+    });
+    clickedButton.classList.add("selected");
+  }
+}
+
+function checkBoss(){
+
+  const correct =
+    bossAnswers[1] === "primary" &&
+    bossAnswers[2] === "secondary" &&
+    bossAnswers[3] === "liquidity";
+
+  const result = document.getElementById("bossResult");
+  if(!result) return;
+
+  if(correct){
+
+    bossCompleted = true;
+
+    result.innerHTML = `
+      <div class="boss-result">
+        <b>👑 FINAL BOSS DEFEATED!</b>
+        <br><br>
+        Kamu berhasil menghubungkan:
+        <br><br>
+        <b>IPO → PRIMARY MARKET</b>
+        <br>
+        <b>ANDI → SECONDARY MARKET</b>
+        <br>
+        <b>SECONDARY MARKET → LIQUIDITY</b>
+        <br><br>
+        Kamu sekarang memahami hubungan kedua pasar tersebut.
+      </div>
+    `;
+
+    unlock("achievementBoss");
+    updateReport();
+    toast("MARKET MASTER unlocked!");
+
+  }else{
+
+    result.innerHTML = `
+      <div
+        class="boss-result"
+        style="background:#421f25;color:#ffb8be;border-color:#8e3e49;"
+      >
+        <b>NOT YET.</b>
+        <br><br>
+        Pastikan setiap pertanyaan sudah dipilih:
+        <br><br>
+        1. IPO → <b>PRIMARY</b>
+        <br>
+        2. Andi membeli dari investor → <b>SECONDARY</b>
+        <br>
+        3. Fungsi pasar sekunder → <b>MEMBERIKAN LIKUIDITAS</b>
+      </div>
+    `;
+  }
+}
+
+
+/* =====================================================
+   ACHIEVEMENT
+===================================================== */
+
+function unlock(id){
+
+  const element = document.getElementById(id);
+  if(!element) return;
+
+  element.classList.remove("locked");
+  element.classList.add("unlocked");
+}
+
+
+/* =====================================================
+   REPORT
+===================================================== */
+
+function updateReport(){
+
+  const money = moneyCompleted ? 100 : 0;
+  const challenge = challengeCases.length
+    ? Math.round((challengeCorrect / challengeCases.length) * 100)
+    : 0;
+
+  const range = document.getElementById("liquidityRange");
+  const liquidity = range ? Number(range.value) : 50;
+  const boss = bossCompleted ? 100 : 0;
+
+  const overall = Math.round(
+    (100 + 100 + money + challenge + liquidity + boss) / 6
+  );
+
+  const overallEl = document.getElementById("overallScore");
+  const moneyEl = document.getElementById("moneySkill");
+  const moneyBar = document.getElementById("moneySkillBar");
+  const challengeEl = document.getElementById("challengeSkill");
+  const challengeBar = document.getElementById("challengeSkillBar");
+  const bossEl = document.getElementById("bossSkill");
+  const bossBar = document.getElementById("bossSkillBar");
+
+  if(overallEl) overallEl.textContent = overall + "%";
+  if(moneyEl) moneyEl.textContent = money + "%";
+  if(moneyBar) moneyBar.style.width = money + "%";
+  if(challengeEl) challengeEl.textContent = challenge + "%";
+  if(challengeBar) challengeBar.style.width = challenge + "%";
+  if(bossEl) bossEl.textContent = boss + "%";
+  if(bossBar) bossBar.style.width = boss + "%";
+}
+
+
+/* =====================================================
+   CERTIFICATE NAME
+===================================================== */
+
+function changeName(){
+
+  const input = document.getElementById("nameInput");
+  const output = document.getElementById("certificateName");
+
+  if(!input || !output) return;
+
+  output.textContent = input.value.trim() || "MARKET LEARNER";
+}
+
+function printCertificate(){
+  window.print();
+}
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  // Pastikan game pertama sudah siap sebelum user mengklik apa pun.
+  renderChallenge();
+  updateLiquidity();
+  updateReport();
+
+});
+
+</script>
+
+</body>
+</html>
